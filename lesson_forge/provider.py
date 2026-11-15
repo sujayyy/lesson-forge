@@ -47,7 +47,10 @@ class APIProvider:
             {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
             "response_format": {"type": "json_object"}, "max_completion_tokens": self.max_tokens}).encode()
         req = Request(self.base_url + "/chat/completions", data=data,
-                      headers={"Authorization": "Bearer " + self.key, "Content-Type": "application/json"})
+                      headers={"Authorization": "Bearer " + self.key,
+                               "Content-Type": "application/json",
+                               "User-Agent": "LessonForge/0.1",
+                               "Accept": "application/json"})
         started = time.monotonic()
         for attempt in range(2):
             if self.last_request_at is not None:

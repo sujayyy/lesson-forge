@@ -249,6 +249,8 @@ class ProviderTests(unittest.TestCase):
         with patch.object(client.opener, "open", return_value=response) as call:
             self.assertEqual(client.complete("evaluator", "Return JSON", {"lesson": "Text"}), {"checks": []})
             body = json.loads(call.call_args.args[0].data)
+            self.assertEqual(call.call_args.args[0].get_header("User-agent"), "LessonForge/0.1")
+            self.assertEqual(call.call_args.args[0].get_header("Accept"), "application/json")
             self.assertEqual(body["model"], "test-judge")
             self.assertEqual(body["response_format"], {"type": "json_object"})
             self.assertNotIn("test-secret", json.dumps(body))

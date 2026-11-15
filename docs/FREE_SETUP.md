@@ -6,6 +6,8 @@ Create a free Groq key using steps 1–2 below. From the project directory run `
 
 ## Manual configuration (optional)
 
+The HTTP adapter identifies itself as `LessonForge/0.1`. This avoids the observed rejection of Python's default user agent by the provider's front end. Authentication and account limits still apply.
+
 The workflow can use a free model API. Creating an OpenAI key does not itself provide API credits. This alternative uses Groq's free plan and requires a separate Groq key.
 
 1. Visit https://console.groq.com/ and sign up or sign in. Stay on the Free plan; do not enable a paid upgrade.
