@@ -21,6 +21,8 @@ Open `report.html` in the printed run directory. Attempt one contains the delibe
 
 ## Live generation
 
+**No paid API budget?** Follow [Groq free-plan setup](docs/FREE_SETUP.md), including request pacing. Live quality validation remains required.
+
 Choose a provider exposing an OpenAI-compatible HTTPS Chat Completions endpoint and models supporting JSON object output and `max_completion_tokens`. The adapter uses the [official Chat Completions request format](https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create). Other providers may need adapter changes; compatibility is not assumed universally.
 
 Set these environment variables in the terminal where you run the app:

@@ -30,6 +30,14 @@ class APIProvider:
         if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment:
             raise ProviderError("LLM_BASE_URL must be an HTTPS URL without credentials, query or fragment")
         self.usage = []
+        try:
+            self.min_interval = int(os.environ.get("LLM_MIN_INTERVAL_SECONDS", "0"))
+            self.max_tokens = int(os.environ.get("LLM_MAX_COMPLETION_TOKENS", "6000"))
+        except ValueError:
+            raise ProviderError("Request interval and completion-token limit must be integers") from None
+        if not 0 <= self.min_interval <= 120 or not 1000 <= self.max_tokens <= 6000:
+            raise ProviderError("Interval must be 0–120 seconds and token limit 1000–6000")
+        self.last_request_at = None
         self.opener = build_opener(NoRedirect())
 
     def complete(self, role, system, payload):
@@ -37,11 +45,17 @@ class APIProvider:
         data = json.dumps({"model": model, "messages": [
             {"role": "system", "content": system},
             {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
-            "response_format": {"type": "json_object"}, "max_completion_tokens": 6000}).encode()
+            "response_format": {"type": "json_object"}, "max_completion_tokens": self.max_tokens}).encode()
         req = Request(self.base_url + "/chat/completions", data=data,
                       headers={"Authorization": "Bearer " + self.key, "Content-Type": "application/json"})
         started = time.monotonic()
         for attempt in range(2):
+            if self.last_request_at is not None:
+                delay = self.min_interval - (time.monotonic() - self.last_request_at)
+                if delay > 0:
+                    print(f"Waiting {delay:.0f}s for configured API pacing...", flush=True)
+                    time.sleep(delay)
+            self.last_request_at = time.monotonic()
             try:
                 with self.opener.open(req, timeout=60) as response:
                     raw = response.read(2_000_001)

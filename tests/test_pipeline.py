@@ -197,6 +197,19 @@ class ProviderTests(unittest.TestCase):
             with self.assertRaises(ProviderError):
                 APIProvider()
 
+    def test_free_tier_request_configuration(self):
+        from unittest.mock import MagicMock
+        with patch.dict("os.environ", {"LLM_MIN_INTERVAL_SECONDS": "65", "LLM_MAX_COMPLETION_TOKENS": "4000"}):
+            client = APIProvider()
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.read.return_value = json.dumps({"choices": [{"finish_reason": "stop", "message": {"content": '{}'}}]}).encode()
+        client.last_request_at = 100
+        with patch.object(client.opener, "open", return_value=response) as call, patch("lesson_forge.provider.time.monotonic", return_value=110), patch("lesson_forge.provider.time.sleep") as sleep:
+            client.complete("generator", "Return JSON", {})
+            sleep.assert_called_once_with(55)
+            self.assertEqual(json.loads(call.call_args.args[0].data)["max_completion_tokens"], 4000)
+
     def test_quota_error_is_safe_and_not_retried(self):
         import io
         client = APIProvider()

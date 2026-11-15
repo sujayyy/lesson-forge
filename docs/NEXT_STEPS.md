@@ -6,6 +6,8 @@ The code is published. The remaining work is a real model run, the final lesson 
 
 ## 1. Configure the model before recording
 
+For a no-payment setup, use [FREE_SETUP.md](FREE_SETUP.md) instead of the OpenAI configuration below. After live validation, resume at step 5 here.
+
 You need a model API key with access to the models you select. For an OpenAI account, follow the [official API quickstart](https://developers.openai.com/api/docs/quickstart) to create a key and check project access and billing. API usage may incur charges. Do not paste the key into a document, this repository, a video, or a chat.
 
 Open **Terminal** on your Mac. Paste this first:

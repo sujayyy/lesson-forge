@@ -1,0 +1,49 @@
+# Run with Groq's free plan
+
+The workflow can use a free model API. Creating an OpenAI key does not itself provide API credits. This alternative uses Groq's free plan and requires a separate Groq key.
+
+1. Visit https://console.groq.com/ and sign up or sign in. Stay on the Free plan; do not enable a paid upgrade.
+2. Open https://console.groq.com/keys and create a key named `lesson-forge`. Keep it private.
+3. In your Mac's zsh Terminal, run:
+
+```zsh
+cd /Users/ivar/Projects/lesson-forge
+unset LLM_API_KEY
+export LLM_BASE_URL="https://api.groq.com/openai/v1"
+export GENERATOR_MODEL="openai/gpt-oss-20b"
+export EVALUATOR_MODEL="openai/gpt-oss-120b"
+export LLM_MIN_INTERVAL_SECONDS=65
+export LLM_MAX_COMPLETION_TOKENS=4000
+export SSL_CERT_FILE="$(python3 -m certifi)"
+```
+
+The certificate line is for this Mac's Python setup, where certifi is already installed. Other computers with working certificates can omit it.
+
+4. Run this line unchanged, then paste your **Groq** key only after the hidden-input prompt appears:
+
+```zsh
+read -rs "LLM_API_KEY?Paste your Groq API key (hidden), then press Enter: "
+```
+
+5. Press Enter, then run:
+
+```zsh
+export LLM_API_KEY
+echo
+python3 -m lesson_forge.calibrate
+```
+
+Keep this Terminal open. The command intentionally spaces API requests by at least 65 seconds; seven calibration probes can take several minutes. A waiting message is expected. Account-specific request, token and daily limits still apply. Pacing is per process and does not coordinate multiple running terminals. Run one command at a time. The reduced completion budget may need adjustment if a model's reasoning consumes too much of it; incomplete outputs still fail closed.
+
+6. Inspect the actual calibration results. Only after addressing any failures, run these one at a time:
+
+```zsh
+python3 -m lesson_forge run --mode live
+python3 -m lesson_forge run --mode live --inject-error first
+```
+
+These are real model calls, despite using a free plan. The same ten-check gate applies. Successful quality results are not guaranteed by provider compatibility. The Groq path has local adapter tests but still needs a real run with your credentials.
+
+7. Continue at step 5 of [NEXT_STEPS.md](NEXT_STEPS.md) to finalize the document and recording. Keep pacing enabled during recording; explain the architecture while requests wait. If a request hits a daily quota, wait for reset rather than enabling a paid plan.
+
+References checked November 15, 2026: [Groq free-plan limits](https://console.groq.com/docs/rate-limits), [compatible endpoint](https://console.groq.com/docs/openai), [JSON output](https://console.groq.com/docs/structured-outputs). Both selected models appear in the published free-plan limits; your account's Limits page is authoritative. The model ID prefix `openai/` identifies the model family; these requests go to Groq and use Groq credentials.
