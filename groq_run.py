@@ -21,7 +21,11 @@ def configure():
 def main():
     parser = argparse.ArgumentParser(description="Groq workflow launcher; never saves or prints API keys")
     parser.add_argument("action", choices=["check", "calibrate", "generate", "error-demo"])
+    parser.add_argument("--start-at", choices=["reference", "false_guarantee", "false_retraining",
+                        "unsupported_example_answer", "unexplained_jargon", "missing_practice", "instruction_attack"])
     args = parser.parse_args()
+    if args.start_at and args.action != "calibrate":
+        parser.error("--start-at is only available for calibration")
     configure()
     print("Provider: Groq; endpoint configuration loaded from this launcher.", flush=True)
     if args.action == "check":
@@ -39,7 +43,7 @@ def main():
     try:
         if args.action == "calibrate":
             from lesson_forge.calibrate import main as calibrate
-            return calibrate()
+            return calibrate(start_at=args.start_at)
         from lesson_forge.__main__ import main as run
         sys.argv = [sys.argv[0], "run", "--mode", "live"]
         if args.action == "error-demo":

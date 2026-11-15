@@ -1,6 +1,7 @@
 """A small API adapter, with no dependency on an orchestration framework."""
 import json
 import os
+import re
 import time
 from urllib.request import Request, urlopen, build_opener, HTTPRedirectHandler
 from urllib.error import HTTPError, URLError
@@ -98,10 +99,19 @@ class APIProvider:
                     pass
                 if code in ("insufficient_quota", "billing_hard_limit_reached"):
                     raise ProviderError(f"Provider HTTP {exc.code}: {code}. Check API project billing, available credits and usage limits.") from None
+                retry_after = None
+                if exc.code == 429:
+                    header = (exc.headers or {}).get("retry-after", "")
+                    if isinstance(header, str) and re.fullmatch(r"[0-9]{1,8}(?:\.[0-9]{1,3})?", header):
+                        retry_after = float(header)
+                    # Do not spend another request on a known long cooldown.
+                    if retry_after is not None and retry_after > 60:
+                        raise ProviderError(f"Provider HTTP 429: rate limited. Retry after at least {retry_after:g} seconds (provider header). No immediate retry sent.") from None
                 if attempt == 0 and (exc.code == 429 or exc.code >= 500):
-                    time.sleep(1)
+                    time.sleep(max(1, retry_after or 0))
                     continue
-                raise ProviderError(f"Provider HTTP {exc.code}" + (f": {code}" if code else "") + "; response body omitted to protect credentials") from None
+                hint = f"; retry after at least {retry_after:g} seconds (provider header)" if retry_after is not None else ""
+                raise ProviderError(f"Provider HTTP {exc.code}" + (f": {code}" if code else "") + hint + "; response body omitted to protect credentials") from None
             except (URLError, TimeoutError, OSError):
                 if attempt == 0:
                     time.sleep(1)

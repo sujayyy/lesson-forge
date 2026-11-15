@@ -43,6 +43,8 @@ python3 -m lesson_forge.calibrate
 
 Keep this Terminal open. The command intentionally spaces API requests by at least 65 seconds; seven calibration probes can take several minutes. A waiting message is expected. Account-specific request, token and daily limits still apply. Pacing is per process and does not coordinate multiple running terminals. Run one command at a time. The reduced completion budget may need adjustment if a model's reasoning consumes too much of it; incomplete outputs still fail closed.
 
+If calibration stops on HTTP 429, stop making requests and check your Groq account's Limits page. A 65-second interval cannot resolve an exhausted daily allowance. The client reports a numeric `retry-after` header when supplied and avoids an immediate retry when that cooldown exceeds 60 seconds. Once the limit permits requests, use the printed `--start-at` command to run the failed probe and those remaining, for example `python3 groq_run.py calibrate --start-at unsupported_example_answer`. This creates a new report explicitly labelled **partial**; it does not overwrite earlier results or claim that omitted probes were rerun. Keep both reports. Repeat the full set if prompts, rubric, sources, model or output settings change between parts.
+
 6. Inspect the actual calibration results. Only after addressing any failures, run these one at a time:
 
 ```zsh

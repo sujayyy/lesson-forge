@@ -274,6 +274,61 @@ class ProviderTests(unittest.TestCase):
             self.assertIn("ERROR:", output.getvalue())
             self.assertIn("remaining probes were not run", output.getvalue())
 
+    def test_partial_calibration_keeps_scope_and_skips_earlier_calls(self):
+        from lesson_forge import calibrate
+        from unittest.mock import MagicMock
+        import contextlib, io
+        provider = MagicMock()
+        provider.evaluator_model = "test"
+        provider.usage = []
+        provider.complete.return_value = {"checks": []}
+        with tempfile.TemporaryDirectory() as tmp, patch.object(calibrate, "APIProvider", return_value=provider), patch.object(calibrate, "ROOT", Path(tmp)), patch.object(calibrate, "load_pack", return_value={"topic": "RAG", "sources": []}):
+            (Path(tmp) / "examples").mkdir()
+            (Path(tmp) / "examples/reference_lesson.md").write_text((ROOT / "examples/reference_lesson.md").read_text())
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(calibrate.main(start_at="unsupported_example_answer"), 2)
+            self.assertEqual(provider.complete.call_count, 4)
+            report = json.loads(next(Path(tmp).glob("runs/*/calibration.json")).read_text())
+            self.assertEqual(report["scope"], "partial")
+            self.assertEqual(report["selected_cases"], ["unsupported_example_answer", "unexplained_jargon", "missing_practice", "instruction_attack"])
+            self.assertEqual([r["case"] for r in report["results"]], report["selected_cases"])
+            self.assertTrue(all("error" in r for r in report["results"]))
+
+    def test_long_rate_limit_cooldown_stops_without_retry(self):
+        import io
+        client = APIProvider()
+        body = json.dumps({"error": {"code": "rate_limit_exceeded", "message": "test-secret"}}).encode()
+        error = HTTPError("https://example.org", 429, "Limit", {"retry-after": "3600"}, io.BytesIO(body))
+        with patch.object(client.opener, "open", side_effect=error) as call, patch("lesson_forge.provider.time.sleep") as sleep:
+            with self.assertRaises(ProviderError) as caught:
+                client.complete("evaluator", "JSON", {})
+            self.assertEqual(call.call_count, 1)
+            sleep.assert_not_called()
+            self.assertIn("3600 seconds", str(caught.exception))
+            self.assertNotIn("test-secret", str(caught.exception))
+
+    def test_short_rate_limit_cooldown_is_honored(self):
+        import io
+        from unittest.mock import MagicMock
+        client = APIProvider()
+        error = HTTPError("https://example.org", 429, "Limit", {"retry-after": "12"}, io.BytesIO(b'{}'))
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.read.return_value = json.dumps({"choices": [{"finish_reason": "stop", "message": {"content": '{}'}}]}).encode()
+        with patch.object(client.opener, "open", side_effect=[error, response]) as call, patch("lesson_forge.provider.time.sleep") as sleep:
+            self.assertEqual(client.complete("generator", "JSON", {}), {})
+            self.assertEqual(call.call_count, 2)
+            sleep.assert_called_once_with(12)
+
+    def test_untrusted_retry_header_is_not_logged(self):
+        import io
+        client = APIProvider()
+        errors = [HTTPError("https://example.org", 429, "test-secret", {"retry-after": "test-secret"}, io.BytesIO(b'{}')) for _ in range(2)]
+        with patch.object(client.opener, "open", side_effect=errors), patch("lesson_forge.provider.time.sleep"):
+            with self.assertRaises(ProviderError) as caught:
+                client.complete("evaluator", "JSON", {})
+            self.assertNotIn("test-secret", str(caught.exception))
+
     def test_successful_api_response_routes_model_and_records_usage(self):
         from unittest.mock import MagicMock
         client = APIProvider()

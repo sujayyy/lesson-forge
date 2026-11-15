@@ -1,4 +1,5 @@
-"""Live holdout probes. This command never publishes lessons or changes memory."""
+"""Live regression probes. Never publishes lessons or changes memory."""
+import argparse
 import json
 from pathlib import Path
 from datetime import datetime, timezone
@@ -21,14 +22,23 @@ def cases(lesson):
     ]
 
 
-def main():
+def main(start_at=None):
     provider = APIProvider()
     pack = load_pack(ROOT / "sources/rag.json", "Introduction to RAG")
     lesson = (ROOT / "examples/reference_lesson.md").read_text()
+    probes = cases(lesson)
+    if start_at is not None:
+        names = [name for name, _, _ in probes]
+        if start_at not in names:
+            raise ValueError("Unknown calibration probe")
+        probes = probes[names.index(start_at):]
+    selected = [name for name, _, _ in probes]
     results = []
     out = ROOT / "runs" / ("calibration-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ"))
     out.mkdir(parents=True)
-    for name, candidate, target in cases(lesson):
+    if len(probes) < 7:
+        print(f"Partial calibration: running {len(probes)} probes starting at {start_at}. Earlier results remain in their original report.")
+    for name, candidate, target in probes:
         provider_failed = False
         try:
             raw = provider.complete("evaluator", EVALUATOR,
@@ -45,18 +55,23 @@ def main():
             results.append({"case": name, "passed_probe": False, "error": str(exc)})
         except ValueError as exc:
             results.append({"case": name, "passed_probe": False, "error": str(exc)})
-        write_json(out / "calibration.json", {"model": provider.evaluator_model, "results": results, "provider_calls": provider.usage})
+        write_json(out / "calibration.json", {"model": provider.evaluator_model,
+                   "scope": "full" if len(probes) == 7 else "partial", "selected_cases": selected,
+                   "results": results, "provider_calls": provider.usage})
         if "error" in results[-1]:
             print(name, "ERROR:", results[-1]["error"])
         else:
             print(name, "PASS" if results[-1]["passed_probe"] else "FAIL")
         if provider_failed:
             print("Calibration stopped: remaining probes were not run because the provider failed.")
+            print(f"After resolving the provider error, continue with: python3 groq_run.py calibrate --start-at {name}")
             print(f"Saved {out}")
             return 1
-    print(f"Saved {out}. Seven probes are a smoke test, not a statistical quality guarantee.")
+    print(f"Saved {out}. {len(probes)} probes were run; this is a smoke test, not a statistical quality guarantee.")
     return 0 if all(r["passed_probe"] for r in results) else 2
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--start-at")
+    raise SystemExit(main(parser.parse_args().start_at))

@@ -63,7 +63,7 @@ Scope includes topic, source content, rubric, execution mode and whether faults 
 | Valid evaluation fails on final attempt | Withhold lesson; save all candidates |
 | Missing checks, fabricated quote or malformed evaluator JSON | Error, no release |
 | Provider refusal or incomplete output | Error, no release |
-| Network, 429 or 5xx | One transport retry, then error |
+| Network, 429 or 5xx | At most one transport retry; known quota failures or a 429 cooldown over 60 seconds stop immediately |
 | Wrong topic/source pairing | Reject before model calls |
 
 Run outputs use unique directories and atomic replacement for individual JSON files and accepted lessons. Writes across SQLite and several filesystem artifacts are not a single transaction. Disk errors or process termination can leave a partial audit; consumers should require the accepted lesson file **and** a successful manifest/check set. This is a local CLI assessment project, not a distributed transactional service.
@@ -71,6 +71,8 @@ Run outputs use unique directories and atomic replacement for individual JSON fi
 ## Validation and limits
 
 The live calibration run `calibration-20261115T161118688948Z` passed five probes and encountered two format errors. The guarantee probe correctly flagged the false claim, but other checks stitched together non-contiguous evidence. The missing-practice probe correctly flagged the omission but returned a bare array. Both responses were rejected by local validation. This motivated provider-side schema constraints and an evidence enum, with no change to the quality rubric or release rules. The new request format still needs a fresh live calibration and generation run; local request-contract tests do not validate model judgments.
+
+The following run, `calibration-20261115T162631364807Z`, passed its first three probes with strict output constraints, then stopped on HTTP 429 before judging the unsupported-answer probe. It is incomplete evidence, not a seven-probe pass. Calibration can now start at a named probe, saving a separate report with an explicit partial scope. Earlier reports remain untouched. Split results are only comparable when model, prompts, rubric, sources and output settings remain the same. Numeric provider retry headers inform cooldowns; the client cannot infer a daily reset time from a generic rate-limit error.
 
 The writer now receives reviewed plain-English `learner_facts` from the source pack, while the evaluator retains full facts. This reduces copying of optional jargon from technical source notes. A fixed fictional notice anchors the RAG example; the generator still writes the lesson and all judgments remain independent. Changing the source pack creates a fresh memory scope. Groq GPT-OSS requests use low reasoning effort within the existing output-token budget, and truncated responses receive a specific error. This execution-setting change requires fresh calibration; prior calibration results do not validate it.
 
