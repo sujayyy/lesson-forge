@@ -6,6 +6,13 @@ from lesson_forge.provider import APIProvider
 
 
 class LauncherTests(unittest.TestCase):
+    def test_plain_authoring_sources_do_not_replace_judge_facts(self):
+        from lesson_forge.pipeline import authoring_sources
+        sources = [{"id": "S1", "facts": ["Full technical fact"], "learner_facts": ["Plain fact"]}]
+        self.assertEqual(authoring_sources(sources)[0]["facts"], ["Plain fact"])
+        self.assertEqual(sources[0]["facts"], ["Full technical fact"])
+        self.assertNotIn("learner_facts", authoring_sources(sources)[0])
+
     def test_evidence_options_preserve_exact_text(self):
         from lesson_forge.prompts import evidence_candidates
         lesson = '## Limits\n\nA claim. [S1]\nA claim. [S1]\n  Keep spacing.\n'

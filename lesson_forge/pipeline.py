@@ -49,7 +49,15 @@ def load_pack(path, topic):
             raise ValueError("Source URLs must use HTTPS")
         if not isinstance(s.get("facts"), list) or not s["facts"] or any(not isinstance(f, str) or not f.strip() for f in s["facts"]):
             raise ValueError("Each source needs nonempty factual notes")
+        if "learner_facts" in s and (not isinstance(s["learner_facts"], list) or not s["learner_facts"] or any(not isinstance(f, str) or not f.strip() for f in s["learner_facts"])):
+            raise ValueError("Learner facts must be a nonempty list of factual strings")
     return pack
+
+
+def authoring_sources(sources):
+    """Use reviewed plain-English paraphrases when supplied; preserve judge facts."""
+    return [{**{k: v for k, v in s.items() if k != "learner_facts"},
+             "facts": s.get("learner_facts", s["facts"])} for s in sources]
 
 
 def run(provider, topic, source_path, out_root, memory_path, retries=2, injection="none", on_event=print):
@@ -85,7 +93,7 @@ def run(provider, topic, source_path, out_root, memory_path, retries=2, injectio
     try:
         for index in range(1, retries + 2):
             on_event(f"[{run_id}] GENERATE attempt {index}/{retries + 1}")
-            payload = {"topic": topic, "sources": pack["sources"], "required_headings": HEADINGS,
+            payload = {"topic": topic, "sources": authoring_sources(pack["sources"]), "required_headings": HEADINGS,
                        "criteria": CRITERIA, "persistent_hints": policy["hints"],
                        "previous_lesson": previous, "failed_checks": feedback,
                        "mechanical_requirements": "450–1000 prose words; mean sentence/line <=18 words; longest <=32; at least two supplied source IDs cited in body and all cited URLs listed."}

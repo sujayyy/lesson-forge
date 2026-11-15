@@ -199,7 +199,7 @@ class ProviderTests(unittest.TestCase):
 
     def test_free_tier_request_configuration(self):
         from unittest.mock import MagicMock
-        with patch.dict("os.environ", {"LLM_MIN_INTERVAL_SECONDS": "65", "LLM_MAX_COMPLETION_TOKENS": "4000"}):
+        with patch.dict("os.environ", {"LLM_MIN_INTERVAL_SECONDS": "65", "LLM_MAX_COMPLETION_TOKENS": "4000", "LLM_BASE_URL": "https://api.groq.com/openai/v1", "GENERATOR_MODEL": "openai/gpt-oss-120b"}):
             client = APIProvider()
         response = MagicMock()
         response.__enter__.return_value = response
@@ -209,6 +209,7 @@ class ProviderTests(unittest.TestCase):
             client.complete("generator", "Return JSON", {})
             sleep.assert_called_once_with(55)
             self.assertEqual(json.loads(call.call_args.args[0].data)["max_completion_tokens"], 4000)
+            self.assertEqual(json.loads(call.call_args.args[0].data)["reasoning_effort"], "low")
 
     def test_quota_error_is_safe_and_not_retried(self):
         import io
@@ -252,6 +253,7 @@ class ProviderTests(unittest.TestCase):
             self.assertEqual(call.call_args.args[0].get_header("User-agent"), "LessonForge/0.1")
             self.assertEqual(call.call_args.args[0].get_header("Accept"), "application/json")
             self.assertEqual(body["model"], "test-judge")
+            self.assertNotIn("reasoning_effort", body)
             self.assertEqual(body["response_format"], {"type": "json_object"})
             self.assertNotIn("test-secret", json.dumps(body))
             self.assertEqual(client.usage[0]["usage"]["total_tokens"], 50)

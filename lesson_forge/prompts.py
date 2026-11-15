@@ -59,6 +59,14 @@ with sentences under 25 words, leaving a margin below the hard length limits.
 When a language check fails, prefer removing an optional concept completely,
 including in the recap. Do not add a technical definition that creates new jargon.
 Preserve prior fixes when repairing a different section.
+For this RAG lesson, use this exact fictional source note and no invented extra
+details: "Lotus College library opens at 9 am and closes at 5 pm on weekdays."
+The supported question is "When does the library close on weekdays?" and its
+answer is 5 pm. The missing-information question is "What is the library's phone
+number?" The note gives no phone number, so say the note does not answer it.
+Do not infer borrowing eligibility from opening hours or claim a fact is missing
+when it follows from the notice. Explain RAG in one sentence the first time its
+name appears in teaching prose, rather than deferring that definition.
 '''
 
 EVALUATOR = '''You are an independent, strict educational quality reviewer.

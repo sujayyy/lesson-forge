@@ -42,10 +42,13 @@ class APIProvider:
 
     def complete(self, role, system, payload):
         model = self.generator_model if role == "generator" else self.evaluator_model
-        data = json.dumps({"model": model, "messages": [
+        request_body = {"model": model, "messages": [
             {"role": "system", "content": system},
             {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
-            "response_format": {"type": "json_object"}, "max_completion_tokens": self.max_tokens}).encode()
+            "response_format": {"type": "json_object"}, "max_completion_tokens": self.max_tokens}
+        if urlparse(self.base_url).hostname == "api.groq.com" and model in {"openai/gpt-oss-20b", "openai/gpt-oss-120b"}:
+            request_body["reasoning_effort"] = "low"
+        data = json.dumps(request_body).encode()
         req = Request(self.base_url + "/chat/completions", data=data,
                       headers={"Authorization": "Bearer " + self.key,
                                "Content-Type": "application/json",
@@ -67,7 +70,11 @@ class APIProvider:
                     value = json.loads(raw)
                 choice = value["choices"][0]
                 if choice.get("finish_reason") != "stop":
-                    raise ProviderError("Provider output incomplete or refused")
+                    if choice.get("finish_reason") == "length":
+                        raise ProviderError("Provider output truncated: completion-token limit reached")
+                    if choice.get("finish_reason") == "content_filter" or choice.get("message", {}).get("refusal"):
+                        raise ProviderError("Provider refused or filtered the response")
+                    raise ProviderError("Provider output incomplete: unexpected finish reason")
                 content = choice["message"].get("content")
                 if not isinstance(content, str):
                     raise ProviderError("Provider did not return text")

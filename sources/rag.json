@@ -1,6 +1,10 @@
 {
   "topic": "Introduction to RAG",
-  "aliases": ["RAG", "Retrieval-Augmented Generation", "RAG (Retrieval-Augmented Generation)"],
+  "aliases": [
+    "RAG",
+    "Retrieval-Augmented Generation",
+    "RAG (Retrieval-Augmented Generation)"
+  ],
   "reviewed_on": "2026-11-15",
   "notes": "Curated paraphrases, not verbatim excerpts. Sources are pinned inputs; the runtime does not browse or independently authenticate their truth.",
   "sources": [
@@ -13,6 +17,12 @@
         "A language model is software trained on text to produce text. Its training alone does not guarantee knowledge of recent information or private documents.",
         "A typical RAG flow prepares documents for search, retrieves passages relevant to a question, supplies those passages together with the question to the model, and generates an answer.",
         "Ordinary retrieval does not itself retrain the language model or change its learned weights. Updating the searchable documents can provide new information without retraining the generator."
+      ],
+      "learner_facts": [
+        "RAG means Retrieval-Augmented Generation: find useful text, give it with a question to a language model, and use it to help write an answer.",
+        "A language model is software trained on text to produce text. Training means learning from examples. Its earlier training may not include new information or private notes.",
+        "Prepare readable notes before questions arrive. For a question, find useful text, give that text with the question to the model, and write an answer.",
+        "Looking up notes is not itself training the model again. New notes can supply new information for an answer."
       ]
     },
     {
@@ -23,6 +33,9 @@
         "The 2020 RAG paper combined a pretrained language generation model with a retriever accessing an external document index.",
         "Its experiments found more factual generated language than a model using only its learned parameters. This is evidence of improvement, not a guarantee of correct answers in all cases.",
         "The original research also fine-tuned components. Saying RAG never involves any training would be misleading; looking up a document at question time is not itself training."
+      ],
+      "learner_facts": [
+        "Experiments in the RAG paper found that retrieved information helped models write more factual answers than using only earlier learning. This does not guarantee that every answer is right."
       ]
     },
     {
@@ -34,6 +47,12 @@
         "Retrieval can use keyword search, vector search, or a combination. A vector represents information as numbers; a vector database is not a requirement for every RAG system.",
         "RAG quality depends on both retrieved evidence and answer generation. Missing, outdated or irrelevant passages can lead to poor answers; the model can still make mistakes.",
         "References help a reader inspect the evidence, but a citation does not prove that an answer is correct. When the evidence is insufficient, an application should make that limitation clear rather than invent an answer."
+      ],
+      "learner_facts": [
+        "RAG can search a chosen set of notes. It does not have to search the public internet.",
+        "There are several ways to search notes. One simple way looks for matching words. Advanced search tools are not required for every RAG system.",
+        "The chosen text may be old, wrong for the question, or missing. The model can also make mistakes when using it.",
+        "A reference shows where information came from and helps readers check it. It does not prove an answer is correct. If the notes do not support an answer, say that instead of inventing one."
       ]
     }
   ]
