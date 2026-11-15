@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 from . import __version__
 from .demo import inject_error
 from .memory import Memory
-from .prompts import GENERATOR, EVALUATOR
+from .prompts import GENERATOR, EVALUATOR, evidence_candidates
 from .provider import ProviderError
 from .report import render_report
 from .rubric import VERSION, HEADINGS, CRITERIA, deterministic, validate_judgment
@@ -111,7 +111,8 @@ def run(provider, topic, source_path, out_root, memory_path, retries=2, injectio
             mechanical = deterministic(lesson, pack["sources"])
             # Do not send generator reasoning, prior verdicts or injection metadata to the judge.
             judge_payload = {"topic": topic, "sources": pack["sources"], "criteria": CRITERIA,
-                             "repeated_failure_focus": policy["hints"], "lesson": lesson}
+                             "repeated_failure_focus": policy["hints"], "lesson": lesson,
+                             "evidence_candidates": evidence_candidates(lesson)}
             write_json(run_dir / f"attempt-{index}-evaluator-input.json", judge_payload)
             raw = provider.complete("evaluator", EVALUATOR, judge_payload)
             write_json(run_dir / f"attempt-{index}-evaluator-output.json", raw)

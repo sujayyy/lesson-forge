@@ -4,7 +4,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 from .demo import ROOT, inject_error
 from .pipeline import load_pack, write_json
-from .prompts import EVALUATOR
+from .prompts import EVALUATOR, evidence_candidates
 from .provider import APIProvider, ProviderError
 from .rubric import CRITERIA, validate_judgment, deterministic
 
@@ -33,7 +33,8 @@ def main():
         try:
             raw = provider.complete("evaluator", EVALUATOR,
                                     {"topic": pack["topic"], "sources": pack["sources"], "criteria": CRITERIA,
-                                     "repeated_failure_focus": [], "lesson": candidate})
+                                     "repeated_failure_focus": [], "lesson": candidate,
+                                     "evidence_candidates": evidence_candidates(candidate)})
             write_json(out / (name + "-raw.json"), raw)
             checks = deterministic(candidate, pack["sources"]) + validate_judgment(raw, candidate)
             observed = {c["id"] for c in checks if not c["passed"]}
