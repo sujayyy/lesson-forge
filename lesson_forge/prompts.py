@@ -30,6 +30,21 @@ For every failure, give a concrete repair in fix. Do not return an overall score
 Judge every subcondition, even if one short evidence quote illustrates only one.
 Repeated-failure focus hints increase scrutiny without changing the pass rules.
 
+INDEPENDENT CRITERION REVIEW:
+Evaluate every criterion against every relevant part of the lesson independently.
+A sentence can fail several criteria at once. Recording an accuracy failure does
+not excuse a language failure in the same sentence. Do not stop checking other
+criteria because the lesson will already be rejected.
+For language, scan the whole teaching body and practice answers for technical
+terms and abbreviations. For each, locate an everyday-language explanation at or
+before its first substantive use. If any lacks that explanation, language FAILS.
+Expanding an abbreviation into other technical words is not an explanation.
+A term is not explained merely because it appears in a source or citation.
+One simple sentence about AI does not establish that every other sentence is
+accessible. Exclude bibliographic titles and URLs from this vocabulary audit.
+Before returning a language pass, check that none of the problem sentences you
+identified under another criterion also contains unexplained technical language.
+
 EVIDENCE OUTPUT CONTRACT:
 The input includes evidence_candidates, an array of exact nonempty lines from
 the candidate lesson. For each checkpoint, choose ONE of these strings and copy

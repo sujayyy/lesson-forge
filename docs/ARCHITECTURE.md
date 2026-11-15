@@ -70,6 +70,8 @@ Run outputs use unique directories and atomic replacement for individual JSON fi
 
 ## Validation and limits
 
+Live calibration with Groq's `openai/gpt-oss-120b` on November 15, 2026 passed six of seven probes. The jargon mutation was rejected for unsupported facts but incorrectly passed the language criterion. This exposed a criterion-specific false acceptance, even though the overall release gate withheld the candidate. The evaluator instructions were then strengthened to audit vocabulary across the whole lesson and judge overlapping failures independently. A fresh live run is required to verify that change. These probes have now informed prompt development and should be treated as regression cases, not an untouched holdout set.
+
 The unit tests verify the controller, schema validation, memory, escaped reports and HTTP error handling. The offline evaluator intentionally recognizes only its bundled fixture and a known injected string. It is never claimed to catch arbitrary factual errors. Live holdout probes measure specific evaluator failures and retain raw judgments.
 
 Readability thresholds are practical heuristics: line breaks count as boundaries and can be gamed. The language checkpoint must independently assess vocabulary and explanations. Even ten passes do not guarantee that a learner understands the lesson. A real deployment should include teacher-labelled regression examples, target-learner comprehension testing, measured evaluator precision/recall, monitoring, and explicit ownership of source updates.
