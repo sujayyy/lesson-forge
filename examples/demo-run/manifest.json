@@ -1,0 +1,34 @@
+{
+  "run_id": "20261115T100608Z-668e3def",
+  "topic": "Introduction to RAG",
+  "mode": "demo",
+  "status": "DEMO_PASSED",
+  "app_version": "0.1.0",
+  "rubric_version": "1.0",
+  "source_hash": "024990bb79487f07bc23bac18cf6d4213b056b9cb4025b7901f23e7dbdfbeec0",
+  "scope": "90e3cdb0af0237005d241e5d34a73d78afd377bcabf1aec17d43014f18d83ddd",
+  "policy": {
+    "version": "curated-hints-v1",
+    "threshold_distinct_runs": 2,
+    "hints": []
+  },
+  "max_retries": 2,
+  "injection": "first",
+  "generator_model": "scripted-fixture",
+  "evaluator_model": "scripted-fixture-not-an-LLM",
+  "prompt_hashes": {
+    "generator": "38fdbf0f5a4c76ded7ef0741edaef771269cfc7f1cacc0eb550054f68b77dc58",
+    "evaluator": "12017e329eddb5ac71756ab463de8bc2f2db635ec61fd0e6f2668e79bd148598"
+  },
+  "started_at": "2026-11-15T10:06:08.540152+00:00",
+  "lesson_file": "demo_lesson.md",
+  "accepted_attempt": 2,
+  "completed_at": "2026-11-15T10:06:08.543375+00:00",
+  "attempt_count": 2,
+  "provider_calls": [],
+  "policy_after_run": {
+    "version": "curated-hints-v1",
+    "threshold_distinct_runs": 2,
+    "hints": []
+  }
+}

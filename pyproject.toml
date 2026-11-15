@@ -1,0 +1,9 @@
+[project]
+name = "lesson-forge"
+version = "0.1.0"
+description = "A bounded, auditable, self-evaluating beginner lesson generator"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
