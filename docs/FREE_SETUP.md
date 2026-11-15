@@ -1,5 +1,11 @@
 # Run with Groq's free plan
 
+## Recommended: no URL copying
+
+Create a free Groq key using steps 1–2 below. From the project directory run `python3 groq_run.py calibrate`. The launcher sets the endpoint, models, pacing and available certificate bundle internally, overriding any malformed shell values. It uses an existing Groq key or asks for hidden input. No key is printed or saved. Use `python3 groq_run.py generate` for the lesson and `python3 groq_run.py error-demo` for deliberate-error testing. `python3 groq_run.py check` checks configuration without making a network request.
+
+## Manual configuration (optional)
+
 The workflow can use a free model API. Creating an OpenAI key does not itself provide API credits. This alternative uses Groq's free plan and requires a separate Groq key.
 
 1. Visit https://console.groq.com/ and sign up or sign in. Stay on the Free plan; do not enable a paid upgrade.
