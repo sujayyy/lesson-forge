@@ -5,6 +5,7 @@ import time
 from urllib.request import Request, urlopen, build_opener, HTTPRedirectHandler
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
+from .schemas import strict_response_format
 
 
 class ProviderError(RuntimeError):
@@ -48,6 +49,7 @@ class APIProvider:
             "response_format": {"type": "json_object"}, "max_completion_tokens": self.max_tokens}
         if urlparse(self.base_url).hostname == "api.groq.com" and model in {"openai/gpt-oss-20b", "openai/gpt-oss-120b"}:
             request_body["reasoning_effort"] = "low"
+            request_body["response_format"] = strict_response_format(role, payload)
         data = json.dumps(request_body).encode()
         req = Request(self.base_url + "/chat/completions", data=data,
                       headers={"Authorization": "Bearer " + self.key,

@@ -37,7 +37,7 @@ The assessment allows Python + API. A small controller makes the release boundar
 
 Code is reliable for countable properties. A separate LLM can assess whether a definition is understandable, an analogy misleading, or an answer unsupported. Both layers must pass. The model returns individual booleans, concrete reasons, exact candidate quotes and repair actions. Local validation rejects incomplete or malformed verdicts.
 
-JSON object mode is used for compatibility, followed by strict application-level validation. Schema-constrained generation would reduce malformed responses on a provider that supports it, but cannot itself establish factual or educational correctness. A schema or quoted sentence is evidence of format, not proof of judgment quality.
+Groq GPT-OSS models use [strict Structured Outputs](https://console.groq.com/docs/structured-outputs). The generator returns a lesson string; the evaluator returns a checks array with required typed fields. Its evidence field is constrained to exact lines extracted from that candidate, or an empty string for missing-content failures. Other provider/model combinations retain JSON object mode for compatibility. Application-level validation always checks completeness, unique criterion IDs, genuine quotes, evidence for passes and repair advice for failures. Schema compliance cannot establish factual or educational correctness.
 
 The independent evaluator sees the candidate, sources, rubric and persistent focus hints. It does not see the generator's conversation, prior pass/fail verdicts, or fault-injection flag. Separate calls reduce direct self-justification; using the same model still creates correlated blind spots. A stronger model or another provider behind an adapter is a useful experiment.
 
@@ -69,6 +69,8 @@ Scope includes topic, source content, rubric, execution mode and whether faults 
 Run outputs use unique directories and atomic replacement for individual JSON files and accepted lessons. Writes across SQLite and several filesystem artifacts are not a single transaction. Disk errors or process termination can leave a partial audit; consumers should require the accepted lesson file **and** a successful manifest/check set. This is a local CLI assessment project, not a distributed transactional service.
 
 ## Validation and limits
+
+The live calibration run `calibration-20261115T161118688948Z` passed five probes and encountered two format errors. The guarantee probe correctly flagged the false claim, but other checks stitched together non-contiguous evidence. The missing-practice probe correctly flagged the omission but returned a bare array. Both responses were rejected by local validation. This motivated provider-side schema constraints and an evidence enum, with no change to the quality rubric or release rules. The new request format still needs a fresh live calibration and generation run; local request-contract tests do not validate model judgments.
 
 The writer now receives reviewed plain-English `learner_facts` from the source pack, while the evaluator retains full facts. This reduces copying of optional jargon from technical source notes. A fixed fictional notice anchors the RAG example; the generator still writes the lesson and all judgments remain independent. Changing the source pack creates a fresh memory scope. Groq GPT-OSS requests use low reasoning effort within the existing output-token budget, and truncated responses receive a specific error. This execution-setting change requires fresh calibration; prior calibration results do not validate it.
 

@@ -85,6 +85,7 @@ class PipelineTests(unittest.TestCase):
     def test_invalid_judgments_fail_closed(self):
         valid = DemoProvider().complete("evaluator", "", {"lesson": self.lesson})
         mutations = []
+        mutations.append(valid["checks"])
         x = copy.deepcopy(valid); x["checks"].pop(); mutations.append(x)
         x = copy.deepcopy(valid); x["checks"][0]["passed"] = "false"; mutations.append(x)
         x = copy.deepcopy(valid); x["checks"][1]["id"] = x["checks"][0]["id"]; mutations.append(x)
@@ -210,6 +211,38 @@ class ProviderTests(unittest.TestCase):
             sleep.assert_called_once_with(55)
             self.assertEqual(json.loads(call.call_args.args[0].data)["max_completion_tokens"], 4000)
             self.assertEqual(json.loads(call.call_args.args[0].data)["reasoning_effort"], "low")
+            schema = json.loads(call.call_args.args[0].data)["response_format"]
+            self.assertEqual(schema["type"], "json_schema")
+            self.assertTrue(schema["json_schema"]["strict"])
+            self.assertEqual(schema["json_schema"]["schema"]["required"], ["lesson"])
+
+    def test_groq_judge_request_constrains_shape_and_exact_quotes(self):
+        from unittest.mock import MagicMock
+        from lesson_forge.rubric import CRITERIA
+        lesson = '## Limits\nA sentence with "quotes".\n\n  Keep spacing.\n'
+        with patch.dict("os.environ", {"LLM_BASE_URL": "https://api.groq.com/openai/v1", "EVALUATOR_MODEL": "openai/gpt-oss-120b"}):
+            client = APIProvider()
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.read.return_value = json.dumps({"choices": [{"finish_reason": "stop", "message": {"content": '{"checks": []}'}}]}).encode()
+        with patch.object(client.opener, "open", return_value=response) as call:
+            # The adapter does not pretend schema compliance proves correctness.
+            raw = client.complete("evaluator", "Return JSON", {"lesson": lesson, "evidence_candidates": ["Invented quote"]})
+        with self.assertRaises(ValueError):
+            validate_judgment(raw, lesson)
+        format = json.loads(call.call_args.args[0].data)["response_format"]
+        self.assertEqual(format["type"], "json_schema")
+        self.assertTrue(format["json_schema"]["strict"])
+        schema = format["json_schema"]["schema"]
+        self.assertEqual(schema["type"], "object")
+        self.assertEqual(schema["required"], ["checks"])
+        self.assertFalse(schema["additionalProperties"])
+        item = schema["properties"]["checks"]["items"]
+        self.assertFalse(item["additionalProperties"])
+        self.assertEqual(set(item["required"]), {"id", "passed", "reason", "evidence", "fix"})
+        self.assertEqual(set(item["properties"]["id"]["enum"]), set(CRITERIA))
+        self.assertEqual(item["properties"]["passed"]["type"], "boolean")
+        self.assertEqual(item["properties"]["evidence"]["enum"], ['', '## Limits', 'A sentence with "quotes".', '  Keep spacing.'])
 
     def test_quota_error_is_safe_and_not_retried(self):
         import io
