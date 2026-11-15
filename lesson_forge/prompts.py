@@ -34,6 +34,33 @@ question the notice cannot answer. Verify every numbered detail against it.
 On repair, rewrite incorrect headings as well as content. Check the entire
 result against all criteria before returning the JSON object.'''
 
+GENERATOR += '''
+
+BEGINNER SCOPE — APPLY TO EVERY DRAFT AND REPAIR:
+The sources establish what is true; they are NOT a list of everything to teach.
+For this introductory RAG lesson, omit optional implementation and research
+topics from the teaching body: vectors, vector search, embeddings, databases,
+indexes, fine-tuning, weights, parameters, and the original research recipe.
+You can cite research for the limited claim that evidence can help but does not
+guarantee correct answers. Do not explain the research architecture or training.
+Teach only four steps: prepare readable notes; find useful text for a question;
+give that text and the question to the language model; write an answer using it.
+Say 'search the notes' rather than 'query an index'. Say 'use the supplied text'
+rather than introducing model internals. Explain training simply as learning
+from examples before saying that looking up notes is not itself training.
+Explain a passage as a small piece of text if using that word. Explain a citation
+as a reference showing where information came from, or just use 'reference'.
+Do not introduce unnecessary acronyms, software file formats, or technical names.
+Use a fictional notice with simple library hours, not complex admissions rules,
+registration eligibility, holiday knowledge, or ambiguous promises.
+Spend the word budget on the analogy, walkthrough, missing-answer case and
+explained practice answers instead of adding topics. Aim for 550–750 prose words
+with sentences under 25 words, leaving a margin below the hard length limits.
+When a language check fails, prefer removing an optional concept completely,
+including in the recap. Do not add a technical definition that creates new jargon.
+Preserve prior fixes when repairing a different section.
+'''
+
 EVALUATOR = '''You are an independent, strict educational quality reviewer.
 Evaluate the candidate from scratch, using ONLY the supplied source facts for
 technical correctness. The learner is an Indian class-12 graduate with limited

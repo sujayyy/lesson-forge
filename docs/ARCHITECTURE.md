@@ -70,6 +70,8 @@ Run outputs use unique directories and atomic replacement for individual JSON fi
 
 ## Validation and limits
 
+A subsequent live generation exhausted its three candidates because repairs introduced different unexplained implementation terms. One repair also exceeded the sentence-length limit. The generator scope was narrowed to the four basic RAG steps, a simple fictional notice and explained practice; optional internals and research details were excluded from teaching prose. The evaluator and retry budget were not relaxed. This change needs a new live generation run to establish its effect.
+
 Live calibration with Groq's `openai/gpt-oss-120b` on November 15, 2026 passed six of seven probes. The jargon mutation was rejected for unsupported facts but incorrectly passed the language criterion. This exposed a criterion-specific false acceptance, even though the overall release gate withheld the candidate. The evaluator instructions were then strengthened to audit vocabulary across the whole lesson and judge overlapping failures independently. A fresh live run is required to verify that change. These probes have now informed prompt development and should be treated as regression cases, not an untouched holdout set.
 
 The unit tests verify the controller, schema validation, memory, escaped reports and HTTP error handling. The offline evaluator intentionally recognizes only its bundled fixture and a known injected string. It is never claimed to catch arbitrary factual errors. Live holdout probes measure specific evaluator failures and retain raw judgments.
