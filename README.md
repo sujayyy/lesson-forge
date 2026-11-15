@@ -137,6 +137,7 @@ Use the same JSON source-pack shape as `sources/rag.json`, with two or more revi
 
 ## Design and submission
 
+- [Exact next steps: setup, live runs, document and recording](docs/NEXT_STEPS.md)
 - [Architecture and decisions](docs/ARCHITECTURE.md)
 - [18-minute Loom walkthrough](docs/LOOM_SCRIPT.md)
 - [Submission status and remaining steps](docs/SUBMISSION.md)
