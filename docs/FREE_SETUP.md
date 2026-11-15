@@ -18,7 +18,7 @@ The workflow can use a free model API. Creating an OpenAI key does not itself pr
 cd /Users/ivar/Projects/lesson-forge
 unset LLM_API_KEY
 export LLM_BASE_URL="https://api.groq.com/openai/v1"
-export GENERATOR_MODEL="openai/gpt-oss-20b"
+export GENERATOR_MODEL="openai/gpt-oss-120b"
 export EVALUATOR_MODEL="openai/gpt-oss-120b"
 export LLM_MIN_INTERVAL_SECONDS=65
 export LLM_MAX_COMPLETION_TOKENS=4000
@@ -55,3 +55,5 @@ These are real model calls, despite using a free plan. The same ten-check gate a
 7. Continue at step 5 of [NEXT_STEPS.md](NEXT_STEPS.md) to finalize the document and recording. Keep pacing enabled during recording; explain the architecture while requests wait. If a request hits a daily quota, wait for reset rather than enabling a paid plan.
 
 References checked November 15, 2026: [Groq free-plan limits](https://console.groq.com/docs/rate-limits), [compatible endpoint](https://console.groq.com/docs/openai), [JSON output](https://console.groq.com/docs/structured-outputs). Both selected models appear in the published free-plan limits; your account's Limits page is authoritative. The model ID prefix `openai/` identifies the model family; these requests go to Groq and use Groq credentials.
+
+The launcher now uses gpt-oss-120b for both roles in separate requests, following repeated instruction-following failures from the smaller generator. This remains within the published free-plan model list. Independent requests do not remove shared model blind spots.

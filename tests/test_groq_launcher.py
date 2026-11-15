@@ -17,6 +17,7 @@ class LauncherTests(unittest.TestCase):
             configure()
             provider = APIProvider()
             self.assertEqual(provider.base_url, "https://api.groq.com/openai/v1")
+            self.assertEqual(provider.generator_model, "openai/gpt-oss-120b")
             self.assertEqual(provider.key, "gsk_test")
             self.assertEqual(provider.min_interval, 65)
             self.assertEqual(provider.max_tokens, 4000)

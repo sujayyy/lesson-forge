@@ -81,7 +81,9 @@ class APIProvider:
                 try:
                     error = json.loads(exc.read(65536)).get("error", {})
                     candidate = error.get("code") or error.get("type")
-                    if candidate in ("insufficient_quota", "rate_limit_exceeded", "billing_hard_limit_reached"):
+                    if candidate in ("insufficient_quota", "rate_limit_exceeded", "billing_hard_limit_reached",
+                                     "json_validate_failed", "structured_generation_failed", "context_length_exceeded",
+                                     "invalid_request_error", "model_not_found"):
                         code = candidate
                 except (ValueError, AttributeError, TypeError, OSError):
                     pass

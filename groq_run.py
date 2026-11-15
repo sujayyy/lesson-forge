@@ -7,7 +7,7 @@ import sys
 
 def configure():
     os.environ["LLM_BASE_URL"] = "https://api.groq.com/openai/v1"
-    os.environ["GENERATOR_MODEL"] = "openai/gpt-oss-20b"
+    os.environ["GENERATOR_MODEL"] = "openai/gpt-oss-120b"
     os.environ["EVALUATOR_MODEL"] = "openai/gpt-oss-120b"
     os.environ["LLM_MIN_INTERVAL_SECONDS"] = "65"
     os.environ["LLM_MAX_COMPLETION_TOKENS"] = "4000"
