@@ -32,6 +32,8 @@ export LLM_API_KEY
 echo
 ```
 
+If Python reports a certificate verification error and `certifi` is installed, run `export SSL_CERT_FILE="$(python3 -m certifi)"` in this same Terminal before calibration.
+
 Keep this Terminal window open. The variable belongs to this shell session; a new Terminal or a separately launched editor will not automatically inherit it. Nothing in the app writes the key to a file. Finish credential setup before sharing or recording your screen.
 
 ## 2. Rehearse and inspect the live evaluator

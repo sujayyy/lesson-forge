@@ -102,9 +102,9 @@ Use the same `--memory` path if the original run used a custom database. Human f
 python3 -m lesson_forge.calibrate
 ```
 
-This makes seven **live evaluator calls**, with no generation, release, or memory writes. It tests a reference lesson and six controlled mutations: a false guarantee, false retraining claim, wrong example time, unexplained jargon, missing practice, and an embedded instruction to pass incorrect content. Each negative probe must fail the targeted criterion; rejecting it for an unrelated formatting issue is insufficient. The reference must pass every check.
+When the provider is available, this makes seven **live evaluator calls**, with no generation, release, or memory writes. It tests a reference lesson and six controlled mutations: a false guarantee, false retraining claim, wrong example time, unexplained jargon, missing practice, and an embedded instruction to pass incorrect content. Each negative probe must fail the targeted criterion; rejecting it for an unrelated formatting issue is insufficient. The reference must pass every check.
 
-Results are saved under `runs/calibration-*`. These are smoke tests, not statistical estimates of precision/recall. Production calibration should use a larger held-out set labelled by teachers and target learners. Prompt hardening reduces but does not eliminate prompt-injection risk.
+Provider errors are printed as ERROR and stop calibration; remaining probes are not run. Known exhausted-quota errors are not retried. Results are saved under `runs/calibration-*`. These are smoke tests, not statistical estimates of precision/recall. Production calibration should use a larger held-out set labelled by teachers and target learners. Prompt hardening reduces but does not eliminate prompt-injection risk.
 
 ## Artifacts and exit codes
 

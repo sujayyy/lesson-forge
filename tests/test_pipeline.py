@@ -197,6 +197,36 @@ class ProviderTests(unittest.TestCase):
             with self.assertRaises(ProviderError):
                 APIProvider()
 
+    def test_quota_error_is_safe_and_not_retried(self):
+        import io
+        client = APIProvider()
+        body = json.dumps({"error": {"code": "insufficient_quota", "message": "test-secret"}}).encode()
+        error = HTTPError("https://example.org", 429, "Quota", {}, io.BytesIO(body))
+        with patch.object(client.opener, "open", side_effect=error) as call:
+            with self.assertRaises(ProviderError) as caught:
+                client.complete("evaluator", "JSON", {})
+            self.assertIn("insufficient_quota", str(caught.exception))
+            self.assertNotIn("test-secret", str(caught.exception))
+            self.assertEqual(call.call_count, 1)
+
+    def test_calibration_stops_after_provider_error(self):
+        from lesson_forge import calibrate
+        from unittest.mock import MagicMock
+        import contextlib, io
+        provider = MagicMock()
+        provider.evaluator_model = "test"
+        provider.usage = []
+        provider.complete.side_effect = ProviderError("Provider HTTP 429: insufficient_quota")
+        with tempfile.TemporaryDirectory() as tmp, patch.object(calibrate, "APIProvider", return_value=provider), patch.object(calibrate, "ROOT", Path(tmp)), patch.object(calibrate, "load_pack", return_value={"topic": "RAG", "sources": []}):
+            (Path(tmp) / "examples").mkdir()
+            (Path(tmp) / "examples/reference_lesson.md").write_text((ROOT / "examples/reference_lesson.md").read_text())
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                self.assertEqual(calibrate.main(), 1)
+            self.assertEqual(provider.complete.call_count, 1)
+            self.assertIn("ERROR:", output.getvalue())
+            self.assertIn("remaining probes were not run", output.getvalue())
+
     def test_successful_api_response_routes_model_and_records_usage(self):
         from unittest.mock import MagicMock
         client = APIProvider()

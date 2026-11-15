@@ -58,10 +58,22 @@ class APIProvider:
                                    "elapsed_seconds": round(time.monotonic() - started, 2), "http_attempts": attempt + 1})
                 return json.loads(content)
             except HTTPError as exc:
+                # Expose only known diagnostic codes, never provider messages
+                # that may echo credentials or user content.
+                code = None
+                try:
+                    error = json.loads(exc.read(65536)).get("error", {})
+                    candidate = error.get("code") or error.get("type")
+                    if candidate in ("insufficient_quota", "rate_limit_exceeded", "billing_hard_limit_reached"):
+                        code = candidate
+                except (ValueError, AttributeError, TypeError, OSError):
+                    pass
+                if code in ("insufficient_quota", "billing_hard_limit_reached"):
+                    raise ProviderError(f"Provider HTTP {exc.code}: {code}. Check API project billing, available credits and usage limits.") from None
                 if attempt == 0 and (exc.code == 429 or exc.code >= 500):
                     time.sleep(1)
                     continue
-                raise ProviderError(f"Provider HTTP {exc.code}; response body omitted to protect credentials") from None
+                raise ProviderError(f"Provider HTTP {exc.code}" + (f": {code}" if code else "") + "; response body omitted to protect credentials") from None
             except (URLError, TimeoutError, OSError):
                 if attempt == 0:
                     time.sleep(1)

@@ -11,7 +11,7 @@ For the full sequence, follow [Exact next steps](NEXT_STEPS.md).
 - Fail-closed verdict validation and no release after exhausted retries or API errors.
 - Persistent SQLite failure memory, human feedback command and curated prompt evolution.
 - Exact candidate drafts, reasons, evidence, payloads, manifests and actual revision diffs.
-- Offline deliberate-error repair rehearsal and 22 passing unit tests.
+- Offline deliberate-error repair rehearsal and 24 passing unit tests.
 - Live evaluator calibration command with seven probes.
 - Beginner RAG reference lesson, architecture notes and an 18-minute Loom runbook.
 - Project pushed to `sujayyy/lesson-forge` on the `main` branch.

@@ -29,6 +29,7 @@ def main():
     out = ROOT / "runs" / ("calibration-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ"))
     out.mkdir(parents=True)
     for name, candidate, target in cases(lesson):
+        provider_failed = False
         try:
             raw = provider.complete("evaluator", EVALUATOR,
                                     {"topic": pack["topic"], "sources": pack["sources"], "criteria": CRITERIA,
@@ -38,10 +39,20 @@ def main():
             observed = {c["id"] for c in checks if not c["passed"]}
             correct = not observed if target is None else target in observed
             results.append({"case": name, "expected_failure": target, "passed_probe": correct, "checks": checks})
-        except (ProviderError, ValueError) as exc:
+        except ProviderError as exc:
+            provider_failed = True
+            results.append({"case": name, "passed_probe": False, "error": str(exc)})
+        except ValueError as exc:
             results.append({"case": name, "passed_probe": False, "error": str(exc)})
         write_json(out / "calibration.json", {"model": provider.evaluator_model, "results": results, "provider_calls": provider.usage})
-        print(name, "PASS" if results[-1]["passed_probe"] else "FAIL")
+        if "error" in results[-1]:
+            print(name, "ERROR:", results[-1]["error"])
+        else:
+            print(name, "PASS" if results[-1]["passed_probe"] else "FAIL")
+        if provider_failed:
+            print("Calibration stopped: remaining probes were not run because the provider failed.")
+            print(f"Saved {out}")
+            return 1
     print(f"Saved {out}. Seven probes are a smoke test, not a statistical quality guarantee.")
     return 0 if all(r["passed_probe"] for r in results) else 2
 
