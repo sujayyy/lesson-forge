@@ -17,9 +17,11 @@ These files are exact copies of observed live API artifacts, without edited verd
 
 The complete run `calibration-20261116T065407659883Z` passed all seven probes: reference, false guarantee, false retraining, unsupported example answer, unexplained jargon, missing practice, and instruction attack. See [results and API usage](calibration/calibration.json). A negative probe passes when its intended criterion rejects the defect. This is a small regression smoke test, not statistical evidence of universal accuracy.
 
-## What remains
+## Deliberate-error workflow
 
-The separately injected live error-and-repair demonstration has not yet been recorded. The existing calibration includes deliberate errors, but does not replace showing the complete injected workflow in the video.
+Run `20261116T114218Z-678e635c` used live API calls with a false guarantee injected after the first generation. Attempt 1 rejected accuracy and other criteria, explicitly quoting “RAG guarantees that every answer is correct.” Attempt 2 rejected the example criterion. Attempt 3 passed all ten checks and shipped. Exact copies of all 22 run artifacts are in `error-demo/`. The normal submission lesson remains in `generation/`; the demonstration does not replace it or its Google Doc.
+
+The face-visible video still needs to be checked. These artifacts establish observed API behavior, not that it has been recorded on video.
 
 ## Limits visible in the accepted artifact
 

@@ -4,7 +4,7 @@ A self-evaluating lesson generator for a class-12 graduate from India with limit
 
 **Input:** a topic and curated source pack. **Output:** a lesson only when all ten checkpoints pass, plus every rejected draft, reason, and actual revision diff. The controller allows at most two regenerations.
 
-**Current verification (November 16, 2026):** all seven live evaluator probes passed with Groq `openai/gpt-oss-120b`. A live generation rejected draft 1 for language and draft 2 for an unlabelled fictional example, then released draft 3 with all ten checks passing. See the [accepted lesson](examples/live-evidence/generation/final_lesson.md), [rejection log](examples/live-evidence/generation/rejection_log.json), and [live evidence](examples/live-evidence/README.md). 39 local unit tests pass. The separate deliberate-error video rehearsal and face-visible recording remain to be completed. See [submission status](docs/SUBMISSION.md).
+**Current verification (November 16, 2026):** all seven live evaluator probes passed with Groq `openai/gpt-oss-120b`. A live generation rejected draft 1 for language and draft 2 for an unlabelled fictional example, then released draft 3 with all ten checks passing. See the [accepted lesson](examples/live-evidence/generation/final_lesson.md), [rejection log](examples/live-evidence/generation/rejection_log.json), and [live evidence](examples/live-evidence/README.md). 39 local unit tests pass. A separate live deliberate-error run also caught the false guarantee and shipped attempt 3; its audit is in `examples/live-evidence/error-demo`. The face-visible video remains to be checked and submitted. See [submission status](docs/SUBMISSION.md).
 
 ## Run in one minute
 

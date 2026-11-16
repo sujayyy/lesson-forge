@@ -2,18 +2,15 @@
 
 The live calibration and ordinary generation are complete. Do not repeat setup or rerun calibration without a reason.
 
-## 1. Rehearse the deliberate-error workflow
+## 1. Use the completed deliberate-error evidence
 
-In your configured Terminal:
+Verified run `20261116T114218Z-678e635c` caught the false guarantee and shipped attempt 3. No more live requests are needed to establish this result.
 
 ```bash
-cd /Users/ivar/Projects/lesson-forge
-python3 groq_run.py error-demo
+open -a Safari /Users/ivar/Projects/lesson-forge/examples/live-evidence/error-demo/report.html
 ```
 
-Let the command finish. It can take several minutes because of API pacing. Send the complete output and its saved path for inspection. Attempt 1 must contain the false guarantee and be rejected under accuracy. A later successful repair is useful; honest withholding after the retry limit is also valid evidence of the gate.
-
-If rate limited, follow the provider's retry delay. Do not launch repeated or parallel commands. Never paste a key into the chat or video.
+Show accuracy FAIL on attempt 1, example FAIL on attempt 2, then all ten passing checks on attempt 3. Identify it as a saved live run. If its execution is in an earlier recording, retain that footage. If not, the recording still needs actual workflow-execution footage; a saved audit must not be presented as a new live run. Plan a fresh execution only when needed and when the provider quota allows it.
 
 ## 2. Inspect the accepted lesson and audit
 
