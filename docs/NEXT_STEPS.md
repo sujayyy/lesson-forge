@@ -29,7 +29,7 @@ The Google Doc link is https://docs.google.com/document/d/1UIkbHkxC04nLFPPOgIFrP
 
 ## 3. Prepare your recording
 
-Follow [LOOM_SCRIPT.md](LOOM_SCRIPT.md): it contains exact screen actions, commands and suggested wording for an 18-minute walkthrough.
+Open Terminal, paste `open -a TextEdit /Users/ivar/Projects/lesson-forge/docs/LOOM_SCRIPT.md`, and press Enter. The rewritten guide has arrow-by-arrow Finder navigation, exact search text, commands, spoken paragraphs, and instructions for each possible live result. No code editor or links are required.
 
 - Use screen plus camera and keep your face visible.
 - Confirm that your account can record 15–20 minutes before starting. If it cannot, arrange a supported recording option before the final take; do not discover the limit mid-demo.
@@ -38,7 +38,7 @@ Follow [LOOM_SCRIPT.md](LOOM_SCRIPT.md): it contains exact screen actions, comma
 - Open the saved successful report, Google Doc, repository and relevant source files.
 - Rehearse explaining the gate, retry bounds, evaluator limitations and memory in your own words.
 
-The script shows the saved ordinary successful run first, then starts a fresh live injected workflow while you explain the architecture. It explicitly labels offline memory and exhaustion rehearsals. Model outputs can vary; describe the result actually shown.
+The script shows the saved ordinary successful run first, then starts a fresh live injected workflow while you explain the architecture. It explains memory by showing its implementation and explicitly labels the offline exhaustion demonstration. Model outputs can vary; describe the result actually shown.
 
 ## 4. Finish and submit
 
