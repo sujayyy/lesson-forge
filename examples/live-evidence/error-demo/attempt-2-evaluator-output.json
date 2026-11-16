@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": true,
+      "reason": "All technical statements are supported by source facts such as RAG’s definition, its four‑step flow, and its limitations; no invented capabilities or guarantees are present.",
+      "fix": "",
+      "evidence": "If the model’s original learning does not include a recent fact, the retrieved passage can fill the gap. Experiments show that using retrieved information makes answers more factual than using the model alone, but it does not guarantee every answer is right [S2]. RAG also lets us keep private notes separate from the model, so we do not have to retrain the model for each new piece of information."
+    },
+    {
+      "id": "foundations",
+      "passed": true,
+      "reason": "The lesson introduces AI as software that does human‑like tasks, defines a language model and training, and expands the RAG acronym before using the terms.",
+      "fix": "",
+      "evidence": "Artificial Intelligence (AI) is software that can do tasks that usually need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1]."
+    },
+    {
+      "id": "coverage",
+      "passed": true,
+      "reason": "The lesson explains what RAG is, why it matters (improved factuality, privacy), and describes the mechanism in the correct order: prepare notes, retrieve passage, give passage + question to model, generate answer.",
+      "fix": "",
+      "evidence": "RAG follows four simple steps:"
+    },
+    {
+      "id": "example",
+      "passed": false,
+      "reason": "The worked example uses a fictional notice about Lotus College that is not present in any supplied source; the criterion requires an example that directly uses a source note.",
+      "fix": "Replace the Lotus College example with an example that quotes a real source note, e.g., use the source fact \"RAG can search a chosen collection of documents\" as the note, pose a question about what RAG can search, retrieve that passage, and show the model’s answer; also include an unanswered question where the source note does not contain the needed information.",
+      "evidence": "Imagine a notice posted at **Lotus College**:"
+    },
+    {
+      "id": "language",
+      "passed": true,
+      "reason": "All technical terms (AI, language model, retrieval, augmentation, generation, passage) are explained in plain language before their first substantive use; no unexplained jargon appears.",
+      "fix": "",
+      "evidence": "Artificial Intelligence (AI) is software that can do tasks that usually need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1]."
+    },
+    {
+      "id": "flow",
+      "passed": true,
+      "reason": "The lesson follows the required order: prerequisites first, then mechanism, then a worked example, limits, and practice questions; sections are coherent and non‑contradictory.",
+      "fix": "",
+      "evidence": "## Start here"
+    },
+    {
+      "id": "practice",
+      "passed": true,
+      "reason": "Two practice questions are provided, each answerable with a correct explanation about using the retrieved passage and handling missing evidence.",
+      "fix": "",
+      "evidence": "1. **Question:** How does the model use the retrieved passage?"
+    }
+  ]
+}

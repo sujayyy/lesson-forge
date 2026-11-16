@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": false,
+      "reason": "The lesson states \"RAG guarantees that every answer is correct,\" which contradicts source facts that RAG does not guarantee correct answers and can still make mistakes.",
+      "fix": "Remove the guarantee statement and note that RAG can still produce incorrect answers.",
+      "evidence": "RAG guarantees that every answer is correct."
+    },
+    {
+      "id": "foundations",
+      "passed": false,
+      "reason": "The lesson does not explain what AI is before using the term; it assumes the learner knows that AI is software that performs tasks requiring human intelligence.",
+      "fix": "Add a simple definition of AI, e.g., \"AI is software that can do tasks that usually need human thinking, like answering questions.\"",
+      "evidence": "Retrieval‑Augmented Generation, or RAG, is a way to get better answers from an AI system. First we look for useful text in our own notes. Then we give that text together with a question to a language model, which is software that writes text after learning from many examples. The model uses the supplied text to help it answer. This is one sentence that defines RAG for the first time [S1]."
+    },
+    {
+      "id": "coverage",
+      "passed": false,
+      "reason": "The lesson includes the false claim that RAG guarantees correct answers, violating the required accurate description of its mechanism and limits.",
+      "fix": "Delete the guarantee claim and ensure the description only states that RAG can improve accuracy but may still be wrong.",
+      "evidence": "RAG guarantees that every answer is correct."
+    },
+    {
+      "id": "example",
+      "passed": true,
+      "reason": "The lesson provides a clear fictional Indian example (Lotus College) with a source note, a question, the retrieved passage, a correct answer, and an unanswered question.",
+      "fix": "",
+      "evidence": "Imagine a notice posted at **Lotus College**:"
+    },
+    {
+      "id": "language",
+      "passed": false,
+      "reason": "Technical term \"AI\" is used without an everyday explanation at its first substantive use.",
+      "fix": "Introduce a plain-language explanation of AI before the term is used.",
+      "evidence": "Retrieval‑Augmented Generation, or RAG, is a way to get better answers from an AI system. First we look for useful text in our own notes. Then we give that text together with a question to a language model, which is software that writes text after learning from many examples. The model uses the supplied text to help it answer. This is one sentence that defines RAG for the first time [S1]."
+    },
+    {
+      "id": "flow",
+      "passed": false,
+      "reason": "The Limits section contains contradictory advice by claiming RAG guarantees correct answers, breaking the logical flow and consistency of the lesson.",
+      "fix": "Rewrite the Limits section to remove the contradictory guarantee and keep consistent with earlier statements.",
+      "evidence": "## Limits"
+    },
+    {
+      "id": "practice",
+      "passed": true,
+      "reason": "Two practice questions are included with correct answers and brief explanations, testing understanding of the mechanism and handling missing evidence.",
+      "fix": "",
+      "evidence": "1. **Question:** How does the model use the retrieved passage?"
+    }
+  ]
+}

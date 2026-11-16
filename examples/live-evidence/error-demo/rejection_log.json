@@ -1,0 +1,242 @@
+[
+  {
+    "attempt": 1,
+    "lesson": "# Introduction to Retrieval‑Augmented Generation (RAG)\n\n## Start here\nRetrieval‑Augmented Generation, or RAG, is a way to get better answers from an AI system. First we look for useful text in our own notes. Then we give that text together with a question to a language model, which is software that writes text after learning from many examples. The model uses the supplied text to help it answer. This is one sentence that defines RAG for the first time [S1].\n\n## What it means\nRAG means *Retrieval‑Augmented Generation*. Retrieval is the act of finding a short piece of text (a passage) that may contain the answer. Augmented means we add this passage to the model’s input. Generation is the model writing the final answer. A language model is a program that produces words after being trained on large collections of text. Training is simply learning patterns from examples, not remembering every fact forever [S1].\n\n## Why it helps\nWhen the model’s original learning does not contain the latest fact, the retrieved passage can fill the gap. Studies show that using retrieved information makes answers more factual than relying on the model alone, although it does not guarantee every answer is correct [S2]. It also lets us keep private notes separate from the model, so the model does not need to be re‑trained for each new piece of information.\n\n## How it works\nRAG follows four easy steps:\n1. **Prepare readable notes** – write short, clear sentences about the topics you care about.\n2. **Find useful text** – when a question appears, search the notes for a passage that may answer it.\n3. **Give the passage and the question to the language model** – the model reads both.\n4. **Write the answer** – the model produces a response, citing the passage if needed.\nThe search can be as simple as looking for matching words; no complex tools are required [S3]. The model does not learn from this lookup; it only uses the passage at answer time [S1].\n\n## A worked example\nImagine a notice posted at **Lotus College**:\n> *Lotus College library opens at 9 am and closes at 5 pm on weekdays.*\nA student asks: **\"When does the library close on weekdays?\"**\nWe search the notice and find the exact sentence that says *closes at 5 pm*. We give the model the passage and the question. The model replies:\n> *The library closes at 5 pm on weekdays.*\nThe answer matches the passage, so we can cite the notice as evidence.\nNow another student asks: **\"What is the library's phone number?\"**\nWe search the notice again but find no phone number. Because the required information is missing, we must tell the student that the notice does not contain the answer. A correct reply is:\n> *The notice does not provide the library’s phone number.*\nThis shows how RAG handles both answered and unanswered queries.\n\n## Limits\n\nRAG guarantees that every answer is correct.\nRAG can only be as good as the notes you provide. If the notes are old, wrong, or missing, the model may give a wrong answer or have to say it does not know. The model itself can still make mistakes even when the passage is correct. RAG does not search the whole internet unless you deliberately add web pages to your notes [S3].\n\n## Try it yourself\n1. **Question:** How does the model use the retrieved passage?\n   - **Answer:** The model reads the passage together with the question and bases its answer on that information. This follows step 3 of the four‑step process.\n2. **Question:** What should you do if the notes do not contain the answer?\n   - **Answer:** Tell the asker that the notes do not have the needed information, instead of making up an answer. This follows the principle that a reference shows where information came from and you should not invent facts [S3].\n\n## Recap\nRAG stands for Retrieval‑Augmented Generation. It combines a simple search of our own notes with a language model that writes answers. The four steps are: prepare notes, find a passage, give passage + question to the model, and write the answer. It helps make answers more accurate, but it works only as well as the notes we have, and the model can still err.\n\n## Sources\n- [S1] https://aws.amazon.com/what-is/retrieval-augmented-generation/\n- [S2] https://arxiv.org/abs/2005.11401\n- [S3] https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview",
+    "lesson_sha256": "4a4cc214bffaf8ecd70d80c5de446f80d8f3ed4a77cdda707cc6c293073aa91d",
+    "injected": true,
+    "decision": "REJECT",
+    "checks": [
+      {
+        "id": "structure",
+        "passed": true,
+        "reason": "Observed headings: ['Start here', 'What it means', 'Why it helps', 'How it works', 'A worked example', 'Limits', 'Try it yourself', 'Recap', 'Sources']",
+        "evidence": "",
+        "fix": ""
+      },
+      {
+        "id": "readability",
+        "passed": true,
+        "reason": "674 prose words; mean 12.0 words per sentence/line; longest 27.",
+        "evidence": "",
+        "fix": ""
+      },
+      {
+        "id": "citations",
+        "passed": true,
+        "reason": "Body source IDs: ['S1', 'S2', 'S3']. IDs and URLs must be allowlisted; all cited URLs must be listed.",
+        "evidence": "",
+        "fix": ""
+      },
+      {
+        "id": "accuracy",
+        "passed": false,
+        "reason": "The lesson states \"RAG guarantees that every answer is correct,\" which contradicts source facts that RAG does not guarantee correct answers and can still make mistakes.",
+        "fix": "Remove the guarantee statement and note that RAG can still produce incorrect answers.",
+        "evidence": "RAG guarantees that every answer is correct."
+      },
+      {
+        "id": "foundations",
+        "passed": false,
+        "reason": "The lesson does not explain what AI is before using the term; it assumes the learner knows that AI is software that performs tasks requiring human intelligence.",
+        "fix": "Add a simple definition of AI, e.g., \"AI is software that can do tasks that usually need human thinking, like answering questions.\"",
+        "evidence": "Retrieval‑Augmented Generation, or RAG, is a way to get better answers from an AI system. First we look for useful text in our own notes. Then we give that text together with a question to a language model, which is software that writes text after learning from many examples. The model uses the supplied text to help it answer. This is one sentence that defines RAG for the first time [S1]."
+      },
+      {
+        "id": "coverage",
+        "passed": false,
+        "reason": "The lesson includes the false claim that RAG guarantees correct answers, violating the required accurate description of its mechanism and limits.",
+        "fix": "Delete the guarantee claim and ensure the description only states that RAG can improve accuracy but may still be wrong.",
+        "evidence": "RAG guarantees that every answer is correct."
+      },
+      {
+        "id": "example",
+        "passed": true,
+        "reason": "The lesson provides a clear fictional Indian example (Lotus College) with a source note, a question, the retrieved passage, a correct answer, and an unanswered question.",
+        "fix": "",
+        "evidence": "Imagine a notice posted at **Lotus College**:"
+      },
+      {
+        "id": "language",
+        "passed": false,
+        "reason": "Technical term \"AI\" is used without an everyday explanation at its first substantive use.",
+        "fix": "Introduce a plain-language explanation of AI before the term is used.",
+        "evidence": "Retrieval‑Augmented Generation, or RAG, is a way to get better answers from an AI system. First we look for useful text in our own notes. Then we give that text together with a question to a language model, which is software that writes text after learning from many examples. The model uses the supplied text to help it answer. This is one sentence that defines RAG for the first time [S1]."
+      },
+      {
+        "id": "flow",
+        "passed": false,
+        "reason": "The Limits section contains contradictory advice by claiming RAG guarantees correct answers, breaking the logical flow and consistency of the lesson.",
+        "fix": "Rewrite the Limits section to remove the contradictory guarantee and keep consistent with earlier statements.",
+        "evidence": "## Limits"
+      },
+      {
+        "id": "practice",
+        "passed": true,
+        "reason": "Two practice questions are included with correct answers and brief explanations, testing understanding of the mechanism and handling missing evidence.",
+        "fix": "",
+        "evidence": "1. **Question:** How does the model use the retrieved passage?"
+      }
+    ],
+    "diff": "First draft"
+  },
+  {
+    "attempt": 2,
+    "lesson": "# Introduction to Retrieval‑Augmented Generation (RAG)\n\n## Start here\nArtificial Intelligence (AI) is software that can do tasks that usually need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1].\n\n## What it means\nRAG stands for Retrieval‑Augmented Generation. *Retrieval* means finding a short piece of text, called a passage, that may contain the answer. *Augmented* means we add this passage to the model’s input. *Generation* means the model creates the final answer. The model does not learn new facts during this step; it only reads the supplied passage while answering [S1].\n\n## Why it helps\nIf the model’s original learning does not include a recent fact, the retrieved passage can fill the gap. Experiments show that using retrieved information makes answers more factual than using the model alone, but it does not guarantee every answer is right [S2]. RAG also lets us keep private notes separate from the model, so we do not have to retrain the model for each new piece of information.\n\n## How it works\nRAG follows four simple steps:\n1. **Prepare readable notes** – write short, clear sentences about the topics you care about.\n2. **Find useful text** – when a question arrives, search the notes for a passage that may answer it. Simple word matching is enough [S3].\n3. **Give the passage and the question to the language model** – the model reads both together.\n4. **Write the answer** – the model produces a response and can cite the passage as evidence.\nRemember, looking up a passage does not change the model’s training; it only supplies extra information at answer time [S1].\n\n## A worked example\nImagine a notice posted at **Lotus College**:\n> *Lotus College library opens at 9 am and closes at 5 pm on weekdays.*\n\nA student asks: **“When does the library close on weekdays?”**\nWe search the notice and find the sentence that says *closes at 5 pm*. We give the model the passage and the question. The model replies:\n> *The library closes at 5 pm on weekdays.*\nThe answer matches the passage, so we can cite the notice as evidence.\n\nAnother student asks: **“What is the library’s phone number?”**\nWe search the notice again but find no phone number. Because the required information is missing, we must tell the student that the notice does not contain the answer. A correct reply is:\n> *The notice does not provide the library’s phone number.*\nThis shows how RAG handles both answered and unanswered queries.\n\n## Limits\nRAG can only be as good as the notes you provide. If the notes are old, wrong, or missing, the model may give a wrong answer or have to say it does not know. The model itself can still make mistakes even when the passage is correct. RAG does not automatically search the whole internet; it only looks at the notes you give it [S3].\n\n## Try it yourself\n1. **Question:** How does the model use the retrieved passage?\n   - **Answer:** The model reads the passage together with the question and bases its answer on that information. This follows step 3 of the four‑step process.\n2. **Question:** What should you do if the notes do not contain the answer?\n   - **Answer:** Tell the asker that the notes do not have the needed information, instead of making up an answer. This follows the principle that a reference shows where information came from and you should not invent facts [S3].\n\n## Recap\nRAG = Retrieval‑Augmented Generation. It combines a simple search of our own notes with a language model that writes answers. The four steps are: prepare notes, find a passage, give passage + question to the model, and write the answer. RAG can improve factuality but it still depends on the quality of the notes and the model may err.\n\n## Sources\n- [S1] https://aws.amazon.com/what-is/retrieval-augmented-generation/\n- [S2] https://arxiv.org/abs/2005.11401\n- [S3] https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview\n",
+    "lesson_sha256": "8629ed93eba642123a2941e086592008b9f9b844d4c38707e649e10828be9d35",
+    "injected": false,
+    "decision": "REJECT",
+    "checks": [
+      {
+        "id": "structure",
+        "passed": true,
+        "reason": "Observed headings: ['Start here', 'What it means', 'Why it helps', 'How it works', 'A worked example', 'Limits', 'Try it yourself', 'Recap', 'Sources']",
+        "evidence": "",
+        "fix": ""
+      },
+      {
+        "id": "readability",
+        "passed": true,
+        "reason": "671 prose words; mean 12.2 words per sentence/line; longest 26.",
+        "evidence": "",
+        "fix": ""
+      },
+      {
+        "id": "citations",
+        "passed": true,
+        "reason": "Body source IDs: ['S1', 'S2', 'S3']. IDs and URLs must be allowlisted; all cited URLs must be listed.",
+        "evidence": "",
+        "fix": ""
+      },
+      {
+        "id": "accuracy",
+        "passed": true,
+        "reason": "All technical statements are supported by source facts such as RAG’s definition, its four‑step flow, and its limitations; no invented capabilities or guarantees are present.",
+        "fix": "",
+        "evidence": "If the model’s original learning does not include a recent fact, the retrieved passage can fill the gap. Experiments show that using retrieved information makes answers more factual than using the model alone, but it does not guarantee every answer is right [S2]. RAG also lets us keep private notes separate from the model, so we do not have to retrain the model for each new piece of information."
+      },
+      {
+        "id": "foundations",
+        "passed": true,
+        "reason": "The lesson introduces AI as software that does human‑like tasks, defines a language model and training, and expands the RAG acronym before using the terms.",
+        "fix": "",
+        "evidence": "Artificial Intelligence (AI) is software that can do tasks that usually need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1]."
+      },
+      {
+        "id": "coverage",
+        "passed": true,
+        "reason": "The lesson explains what RAG is, why it matters (improved factuality, privacy), and describes the mechanism in the correct order: prepare notes, retrieve passage, give passage + question to model, generate answer.",
+        "fix": "",
+        "evidence": "RAG follows four simple steps:"
+      },
+      {
+        "id": "example",
+        "passed": false,
+        "reason": "The worked example uses a fictional notice about Lotus College that is not present in any supplied source; the criterion requires an example that directly uses a source note.",
+        "fix": "Replace the Lotus College example with an example that quotes a real source note, e.g., use the source fact \"RAG can search a chosen collection of documents\" as the note, pose a question about what RAG can search, retrieve that passage, and show the model’s answer; also include an unanswered question where the source note does not contain the needed information.",
+        "evidence": "Imagine a notice posted at **Lotus College**:"
+      },
+      {
+        "id": "language",
+        "passed": true,
+        "reason": "All technical terms (AI, language model, retrieval, augmentation, generation, passage) are explained in plain language before their first substantive use; no unexplained jargon appears.",
+        "fix": "",
+        "evidence": "Artificial Intelligence (AI) is software that can do tasks that usually need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1]."
+      },
+      {
+        "id": "flow",
+        "passed": true,
+        "reason": "The lesson follows the required order: prerequisites first, then mechanism, then a worked example, limits, and practice questions; sections are coherent and non‑contradictory.",
+        "fix": "",
+        "evidence": "## Start here"
+      },
+      {
+        "id": "practice",
+        "passed": true,
+        "reason": "Two practice questions are provided, each answerable with a correct explanation about using the retrieved passage and handling missing evidence.",
+        "fix": "",
+        "evidence": "1. **Question:** How does the model use the retrieved passage?"
+      }
+    ],
+    "diff": "--- previous\n+++ current\n@@ -1,38 +1,38 @@\n # Introduction to Retrieval‑Augmented Generation (RAG)\n \n ## Start here\n-Retrieval‑Augmented Generation, or RAG, is a way to get better answers from an AI system. First we look for useful text in our own notes. Then we give that text together with a question to a language model, which is software that writes text after learning from many examples. The model uses the supplied text to help it answer. This is one sentence that defines RAG for the first time [S1].\n+Artificial Intelligence (AI) is software that can do tasks that usually need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1].\n \n ## What it means\n-RAG means *Retrieval‑Augmented Generation*. Retrieval is the act of finding a short piece of text (a passage) that may contain the answer. Augmented means we add this passage to the model’s input. Generation is the model writing the final answer. A language model is a program that produces words after being trained on large collections of text. Training is simply learning patterns from examples, not remembering every fact forever [S1].\n+RAG stands for Retrieval‑Augmented Generation. *Retrieval* means finding a short piece of text, called a passage, that may contain the answer. *Augmented* means we add this passage to the model’s input. *Generation* means the model creates the final answer. The model does not learn new facts during this step; it only reads the supplied passage while answering [S1].\n \n ## Why it helps\n-When the model’s original learning does not contain the latest fact, the retrieved passage can fill the gap. Studies show that using retrieved information makes answers more factual than relying on the model alone, although it does not guarantee every answer is correct [S2]. It also lets us keep private notes separate from the model, so the model does not need to be re‑trained for each new piece of information.\n+If the model’s original learning does not include a recent fact, the retrieved passage can fill the gap. Experiments show that using retrieved information makes answers more factual than using the model alone, but it does not guarantee every answer is right [S2]. RAG also lets us keep private notes separate from the model, so we do not have to retrain the model for each new piece of information.\n \n ## How it works\n-RAG follows four easy steps:\n+RAG follows four simple steps:\n 1. **Prepare readable notes** – write short, clear sentences about the topics you care about.\n-2. **Find useful text** – when a question appears, search the notes for a passage that may answer it.\n-3. **Give the passage and the question to the language model** – the model reads both.\n-4. **Write the answer** – the model produces a response, citing the passage if needed.\n-The search can be as simple as looking for matching words; no complex tools are required [S3]. The model does not learn from this lookup; it only uses the passage at answer time [S1].\n+2. **Find useful text** – when a question arrives, search the notes for a passage that may answer it. Simple word matching is enough [S3].\n+3. **Give the passage and the question to the language model** – the model reads both together.\n+4. **Write the answer** – the model produces a response and can cite the passage as evidence.\n+Remember, looking up a passage does not change the model’s training; it only supplies extra information at answer time [S1].\n \n ## A worked example\n Imagine a notice posted at **Lotus College**:\n-> *Lotus College library opens at 9 am and closes at 5 pm on weekdays.*\n-A student asks: **\"When does the library close on weekdays?\"**\n-We search the notice and find the exact sentence that says *closes at 5 pm*. We give the model the passage and the question. The model replies:\n+> *Lotus College library opens at 9 am and closes at 5 pm on weekdays.*\n+\n+A student asks: **“When does the library close on weekdays?”**\n+We search the notice and find the sentence that says *closes at 5 pm*. We give the model the passage and the question. The model replies:\n > *The library closes at 5 pm on weekdays.*\n The answer matches the passage, so we can cite the notice as evidence.\n-Now another student asks: **\"What is the library's phone number?\"**\n+\n+Another student asks: **“What is the library’s phone number?”**\n We search the notice again but find no phone number. Because the required information is missing, we must tell the student that the notice does not contain the answer. A correct reply is:\n > *The notice does not provide the library’s phone number.*\n This shows how RAG handles both answered and unanswered queries.\n \n ## Limits\n-\n-RAG guarantees that every answer is correct.\n-RAG can only be as good as the notes you provide. If the notes are old, wrong, or missing, the model may give a wrong answer or have to say it does not know. The model itself can still make mistakes even when the passage is correct. RAG does not search the whole internet unless you deliberately add web pages to your notes [S3].\n+RAG can only be as good as the notes you provide. If the notes are old, wrong, or missing, the model may give a wrong answer or have to say it does not know. The model itself can still make mistakes even when the passage is correct. RAG does not automatically search the whole internet; it only looks at the notes you give it [S3].\n \n ## Try it yourself\n 1. **Question:** How does the model use the retrieved passage?\n@@ -41,9 +41,9 @@\n    - **Answer:** Tell the asker that the notes do not have the needed information, instead of making up an answer. This follows the principle that a reference shows where information came from and you should not invent facts [S3].\n \n ## Recap\n-RAG stands for Retrieval‑Augmented Generation. It combines a simple search of our own notes with a language model that writes answers. The four steps are: prepare notes, find a passage, give passage + question to the model, and write the answer. It helps make answers more accurate, but it works only as well as the notes we have, and the model can still err.\n+RAG = Retrieval‑Augmented Generation. It combines a simple search of our own notes with a language model that writes answers. The four steps are: prepare notes, find a passage, give passage + question to the model, and write the answer. RAG can improve factuality but it still depends on the quality of the notes and the model may err.\n \n ## Sources\n - [S1] https://aws.amazon.com/what-is/retrieval-augmented-generation/\n - [S2] https://arxiv.org/abs/2005.11401\n-- [S3] https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview+- [S3] https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview\n"
+  },
+  {
+    "attempt": 3,
+    "lesson": "# Introduction to Retrieval‑Augmented Generation (RAG)\n\n## Start here\nArtificial Intelligence (AI) is software that can do tasks that normally need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1].\n\n## What it means\nRAG stands for Retrieval‑Augmented Generation. *Retrieval* means finding a short piece of text, called a passage, that may contain the answer. *Augmented* means we add this passage to the model’s input. *Generation* means the model creates the final answer. The model does not learn new facts during this step; it only reads the supplied passage while answering [S1].\n\n## Why it helps\nIf the model’s original learning does not include a recent fact, the retrieved passage can fill the gap. Experiments show that using retrieved information makes answers more factual than using the model alone, but it does not guarantee every answer is right [S2]. RAG also lets us keep private notes separate from the model, so we do not have to retrain the model for each new piece of information.\n\n## How it works\nRAG follows four simple steps:\n1. **Prepare readable notes** – write short, clear sentences about the topics you care about.\n2. **Find useful text** – when a question arrives, search the notes for a passage that may answer it. Simple word matching is enough [S3].\n3. **Give the passage and the question to the language model** – the model reads both together.\n4. **Write the answer** – the model produces a response and can cite the passage as evidence.\nLooking up a passage does not change the model’s training; it only supplies extra information at answer time [S1].\n\n## A worked example\nImagine a notice posted at **Lotus College**:\n> *Lotus College library opens at 9 am and closes at 5 pm on weekdays.*\n\nA student asks: **“When does the library close on weekdays?”**\nWe search the notice and find the sentence that says *closes at 5 pm*. We give the model the passage and the question. The model replies:\n> *The library closes at 5 pm on weekdays.*\nThe answer matches the passage, so we can cite the notice as evidence.\n\nAnother student asks: **“What is the library’s phone number?”**\nWe search the notice again but find no phone number. Because the required information is missing, we must tell the student that the notice does not contain the answer. A correct reply is:\n> *The notice does not provide the library’s phone number.*\nThis shows how RAG handles both answered and unanswered queries.\n\n## Limits\nRAG can only be as good as the notes you provide. If the notes are old, wrong, or missing, the model may give a wrong answer or have to say it does not know. The model itself can still make mistakes even when the passage is correct. RAG does not automatically search the whole internet; it only looks at the notes you give it [S3].\n\n## Try it yourself\n1. **Question:** How does the model use the retrieved passage?\n   - **Answer:** The model reads the passage together with the question and bases its answer on that information. This follows step 3 of the four‑step process.\n2. **Question:** What should you do if the notes do not contain the answer?\n   - **Answer:** Tell the asker that the notes do not have the needed information, instead of making up an answer. This follows the principle that a reference shows where information came from and you should not invent facts [S3].\n\n## Recap\nRAG = Retrieval‑Augmented Generation. It combines a simple search of our own notes with a language model that writes answers. The four steps are: prepare notes, find a passage, give passage + question to the model, and write the answer. RAG can improve factuality but it still depends on the quality of the notes, and the model may err.\n\n## Sources\n- [S1] https://aws.amazon.com/what-is/retrieval-augmented-generation/\n- [S2] https://arxiv.org/abs/2005.11401\n- [S3] https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview",
+    "lesson_sha256": "816d939c05c3bb8e811360978638e187376320d607637b25aeb41e40f66b76f5",
+    "injected": false,
+    "decision": "PASS",
+    "checks": [
+      {
+        "id": "structure",
+        "passed": true,
+        "reason": "Observed headings: ['Start here', 'What it means', 'Why it helps', 'How it works', 'A worked example', 'Limits', 'Try it yourself', 'Recap', 'Sources']",
+        "evidence": "",
+        "fix": ""
+      },
+      {
+        "id": "readability",
+        "passed": true,
+        "reason": "670 prose words; mean 12.2 words per sentence/line; longest 26.",
+        "evidence": "",
+        "fix": ""
+      },
+      {
+        "id": "citations",
+        "passed": true,
+        "reason": "Body source IDs: ['S1', 'S2', 'S3']. IDs and URLs must be allowlisted; all cited URLs must be listed.",
+        "evidence": "",
+        "fix": ""
+      },
+      {
+        "id": "accuracy",
+        "passed": true,
+        "reason": "All technical claims match the supplied source facts; no invented capabilities or guarantees are present.",
+        "fix": "",
+        "evidence": "Artificial Intelligence (AI) is software that can do tasks that normally need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1]."
+      },
+      {
+        "id": "foundations",
+        "passed": true,
+        "reason": "The lesson explains AI, language models, and expands the RAG acronym from zero, without assuming programming knowledge.",
+        "fix": "",
+        "evidence": "Artificial Intelligence (AI) is software that can do tasks that normally need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1]."
+      },
+      {
+        "id": "coverage",
+        "passed": true,
+        "reason": "The lesson describes what RAG is, why it matters, and the four-step mechanism in correct order, and notes that vector search or internet access are not required.",
+        "fix": "",
+        "evidence": "RAG follows four simple steps:"
+      },
+      {
+        "id": "example",
+        "passed": true,
+        "reason": "A fictional Indian college example is provided with source note, learner question, retrieved passage, and correct answer; also an unanswered question with appropriate response.",
+        "fix": "",
+        "evidence": "Imagine a notice posted at **Lotus College**:"
+      },
+      {
+        "id": "language",
+        "passed": true,
+        "reason": "Every technical term is explained at or before first use; language is everyday English suitable for a class‑12 graduate.",
+        "fix": "",
+        "evidence": "Artificial Intelligence (AI) is software that can do tasks that normally need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1]."
+      },
+      {
+        "id": "flow",
+        "passed": true,
+        "reason": "The lesson follows the required order: prerequisites, mechanism, worked example, limits, recap, and practice without contradictions.",
+        "fix": "",
+        "evidence": "## Start here"
+      },
+      {
+        "id": "practice",
+        "passed": true,
+        "reason": "Two practice questions are included, each answerable with correct explanations about mechanism use and handling missing evidence.",
+        "fix": "",
+        "evidence": "1. **Question:** How does the model use the retrieved passage?"
+      }
+    ],
+    "diff": "--- previous\n+++ current\n@@ -1,7 +1,7 @@\n # Introduction to Retrieval‑Augmented Generation (RAG)\n \n ## Start here\n-Artificial Intelligence (AI) is software that can do tasks that usually need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1].\n+Artificial Intelligence (AI) is software that can do tasks that normally need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1].\n \n ## What it means\n RAG stands for Retrieval‑Augmented Generation. *Retrieval* means finding a short piece of text, called a passage, that may contain the answer. *Augmented* means we add this passage to the model’s input. *Generation* means the model creates the final answer. The model does not learn new facts during this step; it only reads the supplied passage while answering [S1].\n@@ -15,7 +15,7 @@\n 2. **Find useful text** – when a question arrives, search the notes for a passage that may answer it. Simple word matching is enough [S3].\n 3. **Give the passage and the question to the language model** – the model reads both together.\n 4. **Write the answer** – the model produces a response and can cite the passage as evidence.\n-Remember, looking up a passage does not change the model’s training; it only supplies extra information at answer time [S1].\n+Looking up a passage does not change the model’s training; it only supplies extra information at answer time [S1].\n \n ## A worked example\n Imagine a notice posted at **Lotus College**:\n@@ -41,9 +41,9 @@\n    - **Answer:** Tell the asker that the notes do not have the needed information, instead of making up an answer. This follows the principle that a reference shows where information came from and you should not invent facts [S3].\n \n ## Recap\n-RAG = Retrieval‑Augmented Generation. It combines a simple search of our own notes with a language model that writes answers. The four steps are: prepare notes, find a passage, give passage + question to the model, and write the answer. RAG can improve factuality but it still depends on the quality of the notes and the model may err.\n+RAG = Retrieval‑Augmented Generation. It combines a simple search of our own notes with a language model that writes answers. The four steps are: prepare notes, find a passage, give passage + question to the model, and write the answer. RAG can improve factuality but it still depends on the quality of the notes, and the model may err.\n \n ## Sources\n - [S1] https://aws.amazon.com/what-is/retrieval-augmented-generation/\n - [S2] https://arxiv.org/abs/2005.11401\n-- [S3] https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview\n+- [S3] https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview"
+  }
+]

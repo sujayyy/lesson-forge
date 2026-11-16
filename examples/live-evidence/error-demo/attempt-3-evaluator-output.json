@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": true,
+      "reason": "All technical claims match the supplied source facts; no invented capabilities or guarantees are present.",
+      "fix": "",
+      "evidence": "Artificial Intelligence (AI) is software that can do tasks that normally need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1]."
+    },
+    {
+      "id": "foundations",
+      "passed": true,
+      "reason": "The lesson explains AI, language models, and expands the RAG acronym from zero, without assuming programming knowledge.",
+      "fix": "",
+      "evidence": "Artificial Intelligence (AI) is software that can do tasks that normally need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1]."
+    },
+    {
+      "id": "coverage",
+      "passed": true,
+      "reason": "The lesson describes what RAG is, why it matters, and the four-step mechanism in correct order, and notes that vector search or internet access are not required.",
+      "fix": "",
+      "evidence": "RAG follows four simple steps:"
+    },
+    {
+      "id": "example",
+      "passed": true,
+      "reason": "A fictional Indian college example is provided with source note, learner question, retrieved passage, and correct answer; also an unanswered question with appropriate response.",
+      "fix": "",
+      "evidence": "Imagine a notice posted at **Lotus College**:"
+    },
+    {
+      "id": "language",
+      "passed": true,
+      "reason": "Every technical term is explained at or before first use; language is everyday English suitable for a class‑12 graduate.",
+      "fix": "",
+      "evidence": "Artificial Intelligence (AI) is software that can do tasks that normally need human thinking, such as answering questions. A language model is a type of AI that writes text after learning patterns from many examples. Training means the model looked at many sentences and learned how words usually follow each other. Retrieval‑Augmented Generation, or RAG, is a way to get better answers from a language model. First we look for useful text in our own notes. Then we give that text together with a question to the language model, which uses the text to help write its answer [S1]."
+    },
+    {
+      "id": "flow",
+      "passed": true,
+      "reason": "The lesson follows the required order: prerequisites, mechanism, worked example, limits, recap, and practice without contradictions.",
+      "fix": "",
+      "evidence": "## Start here"
+    },
+    {
+      "id": "practice",
+      "passed": true,
+      "reason": "Two practice questions are included, each answerable with correct explanations about mechanism use and handling missing evidence.",
+      "fix": "",
+      "evidence": "1. **Question:** How does the model use the retrieved passage?"
+    }
+  ]
+}
