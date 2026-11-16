@@ -1,4 +1,4 @@
-"""Provider-side format constraints; semantic release checks remain local."""
+"""Provider response schemas and exact evidence mapping."""
 from .prompts import evidence_candidates
 from .rubric import CRITERIA
 

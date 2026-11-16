@@ -4,7 +4,6 @@ import json
 import re
 import uuid
 from datetime import datetime, timezone
-from pathlib import Path
 from urllib.parse import urlparse
 from . import __version__
 from .demo import inject_error

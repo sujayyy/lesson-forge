@@ -1,7 +1,5 @@
 """Live regression probes. Never publishes lessons or changes memory."""
 import argparse
-import json
-from pathlib import Path
 from datetime import datetime, timezone
 from .demo import ROOT, inject_error
 from .pipeline import load_pack, write_json

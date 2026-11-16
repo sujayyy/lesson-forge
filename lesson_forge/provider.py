@@ -3,7 +3,7 @@ import json
 import os
 import re
 import time
-from urllib.request import Request, urlopen, build_opener, HTTPRedirectHandler
+from urllib.request import Request, build_opener, HTTPRedirectHandler
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from .schemas import strict_response_format, evidence_lines, resolve_evidence, CONTRACT_VERSION
