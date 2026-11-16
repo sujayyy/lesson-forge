@@ -198,6 +198,38 @@ class ProviderTests(unittest.TestCase):
             with self.assertRaises(ProviderError):
                 APIProvider()
 
+    def test_structured_provider_error_retries_identical_request_once(self):
+        import io
+        from unittest.mock import MagicMock
+        client = APIProvider()
+        body = json.dumps({"error": {"code": "json_validate_failed", "message": "test-secret", "failed_generation": "private"}}).encode()
+        error = HTTPError("https://example.org", 400, "Bad output", {}, io.BytesIO(body))
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.read.return_value = json.dumps({"choices": [{"finish_reason": "stop", "message": {"content": '{"checks": []}'}}]}).encode()
+        with patch.object(client.opener, "open", side_effect=[error, response]) as call, patch("lesson_forge.provider.time.sleep"):
+            raw = client.complete("evaluator", "Return JSON", {"lesson": "Text"})
+        self.assertEqual(call.call_count, 2)
+        self.assertEqual(call.call_args_list[0].args[0].data, call.call_args_list[1].args[0].data)
+        self.assertEqual(client.usage[0]["retry_errors"], [{"http_status": 400, "code": "json_validate_failed"}])
+        self.assertNotIn("test-secret", json.dumps(client.usage))
+        # A completed HTTP retry does not bypass semantic validation.
+        with self.assertRaises(ValueError):
+            validate_judgment(raw, "Text")
+
+    def test_structured_provider_retry_remains_bounded(self):
+        import io
+        for code, expected_calls in [("json_validate_failed", 2), ("structured_generation_failed", 2), ("invalid_request_error", 1)]:
+            with self.subTest(code=code):
+                client = APIProvider()
+                errors = [HTTPError("https://example.org", 400, "test-secret", {}, io.BytesIO(json.dumps({"error": {"code": code}}).encode())) for _ in range(2)]
+                with patch.object(client.opener, "open", side_effect=errors) as call, patch("lesson_forge.provider.time.sleep"):
+                    with self.assertRaises(ProviderError) as caught:
+                        client.complete("evaluator", "Return JSON", {})
+                    self.assertEqual(call.call_count, expected_calls)
+                    self.assertIn(code, str(caught.exception))
+                    self.assertNotIn("test-secret", str(caught.exception))
+
     def test_free_tier_request_configuration(self):
         from unittest.mock import MagicMock
         with patch.dict("os.environ", {"LLM_MIN_INTERVAL_SECONDS": "65", "LLM_MAX_COMPLETION_TOKENS": "4000", "LLM_BASE_URL": "https://api.groq.com/openai/v1", "GENERATOR_MODEL": "openai/gpt-oss-120b"}):

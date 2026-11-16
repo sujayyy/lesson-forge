@@ -39,6 +39,8 @@ def main():
         provider = DemoProvider() if args.mode == "demo" else APIProvider()
         _, manifest = run(provider, args.topic, args.sources, args.out, args.memory,
                           args.retries, args.inject_error)
+        if manifest["status"] == "ERROR":
+            print("Reason:", manifest.get("error", "See the saved report."))
         return 0 if manifest["status"] in {"SHIPPED", "DEMO_PASSED"} else (2 if manifest["status"] == "WITHHELD" else 1)
     except (ProviderError, ValueError, OSError) as exc:
         print(f"ERROR: {exc}")

@@ -58,6 +58,7 @@ class APIProvider:
                                "User-Agent": "LessonForge/0.1",
                                "Accept": "application/json"})
         started = time.monotonic()
+        retry_errors = []
         for attempt in range(2):
             if self.last_request_at is not None:
                 delay = self.min_interval - (time.monotonic() - self.last_request_at)
@@ -82,7 +83,8 @@ class APIProvider:
                 if not isinstance(content, str):
                     raise ProviderError("Provider did not return text")
                 self.usage.append({"role": role, "model": model, "usage": value.get("usage", {}),
-                                   "elapsed_seconds": round(time.monotonic() - started, 2), "http_attempts": attempt + 1})
+                                   "elapsed_seconds": round(time.monotonic() - started, 2), "http_attempts": attempt + 1,
+                                   "retry_errors": retry_errors})
                 return json.loads(content)
             except HTTPError as exc:
                 # Expose only known diagnostic codes, never provider messages
@@ -107,7 +109,11 @@ class APIProvider:
                     # Do not spend another request on a known long cooldown.
                     if retry_after is not None and retry_after > 60:
                         raise ProviderError(f"Provider HTTP 429: rate limited. Retry after at least {retry_after:g} seconds (provider header). No immediate retry sent.") from None
-                if attempt == 0 and (exc.code == 429 or exc.code >= 500):
+                format_failure = exc.code == 400 and code in {"json_validate_failed", "structured_generation_failed"}
+                if attempt == 0 and (exc.code == 429 or exc.code >= 500 or format_failure):
+                    retry_errors.append({"http_status": exc.code, "code": code})
+                    if format_failure:
+                        print("Provider could not produce structured JSON; retrying the same request once...", flush=True)
                     time.sleep(max(1, retry_after or 0))
                     continue
                 hint = f"; retry after at least {retry_after:g} seconds (provider header)" if retry_after is not None else ""
