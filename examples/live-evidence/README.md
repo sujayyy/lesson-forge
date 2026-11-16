@@ -21,7 +21,7 @@ The complete run `calibration-20261116T065407659883Z` passed all seven probes: r
 
 Run `20261116T114218Z-678e635c` used live API calls with a false guarantee injected after the first generation. Attempt 1 rejected accuracy and other criteria, explicitly quoting “RAG guarantees that every answer is correct.” Attempt 2 rejected the example criterion. Attempt 3 passed all ten checks and shipped. Exact copies of all 22 run artifacts are in `error-demo/`. The normal submission lesson remains in `generation/`; the demonstration does not replace it or its Google Doc.
 
-The face-visible video still needs to be checked. These artifacts establish observed API behavior, not that it has been recorded on video.
+These artifacts preserve observed API behavior. They are saved evidence, separate from any recorded walkthrough.
 
 ## Limits visible in the accepted artifact
 

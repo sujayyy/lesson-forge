@@ -4,7 +4,11 @@ A self-evaluating lesson generator for a class-12 graduate from India with limit
 
 **Input:** a topic and curated source pack. **Output:** a lesson only when all ten checkpoints pass, plus every rejected draft, reason, and actual revision diff. The controller allows at most two regenerations.
 
-**Current verification (November 16, 2026):** all seven live evaluator probes passed with Groq `openai/gpt-oss-120b`. A live generation rejected draft 1 for language and draft 2 for an unlabelled fictional example, then released draft 3 with all ten checks passing. See the [accepted lesson](examples/live-evidence/generation/final_lesson.md), [rejection log](examples/live-evidence/generation/rejection_log.json), and [live evidence](examples/live-evidence/README.md). 39 local unit tests pass. A separate live deliberate-error run also caught the false guarantee and shipped attempt 3; its audit is in `examples/live-evidence/error-demo`. The face-visible video remains to be checked and submitted. See [submission status](docs/SUBMISSION.md).
+**Current verification (November 16, 2026):** all seven live evaluator probes passed with Groq `openai/gpt-oss-120b`. A live generation rejected draft 1 for language and draft 2 for an unlabelled fictional example, then released draft 3 with all ten checks passing. See the [accepted lesson](examples/live-evidence/generation/final_lesson.md), [rejection log](examples/live-evidence/generation/rejection_log.json), and [live evidence](examples/live-evidence/README.md). 39 local unit tests pass. A separate live deliberate-error run also caught the false guarantee and shipped attempt 3; its audit is in `examples/live-evidence/error-demo`.
+
+## Submission lesson
+
+Read the [lesson document](https://docs.google.com/document/d/1UIkbHkxC04nLFPPOgIFrPo4tjKOlgTwUEFcvNu61E8s/edit), or inspect the exact accepted Markdown and evaluation history in [live evidence](examples/live-evidence/README.md).
 
 ## Run in one minute
 
@@ -127,7 +131,7 @@ Exit `0`: live release or explicitly labelled demo success. Exit `2`: retries ex
 
 Maximum cost per generation run: three candidates × two role calls = six logical model calls. Each call allows at most one retry for network errors, rate limits, server errors, or specific provider structured-output failures, with a 60-second socket timeout and 6,000 completion-token limit. Up to 12 HTTP attempts are possible. The timeout is a socket/network limit, not a strict end-to-end deadline. Returned usage is recorded; pricing depends on configured models and is not estimated here.
 
-`data/` and `runs/` are ignored by Git because prompts and logs may include user content. Reviewed live evidence is included in `examples/live-evidence/`, alongside the separately labelled offline rehearsal in `examples/demo-run/`.
+`data/` and `runs/` are ignored by Git because prompts and logs may include user content. Reviewed live evidence is included in `examples/live-evidence/`. Offline fixture reports can be reproduced with the demo command above.
 
 ## Other topics
 
@@ -137,12 +141,11 @@ python3 -m lesson_forge run --topic "Your topic" --sources sources/your-topic.js
 
 Use the same JSON source-pack shape as `sources/rag.json`, with two or more reviewed sources and aliases. The topic must match that pack. General lesson checks apply; RAG-specific clauses apply only to RAG. The college-example rubric fits this assessment but may need a versioned adjustment for some other subjects. Offline replay and deliberate-error injection support the bundled RAG topic only.
 
-## Design and submission
+## Design and reference material
 
-- [Exact next steps: setup, live runs, document and recording](docs/NEXT_STEPS.md)
 - [Architecture and decisions](docs/ARCHITECTURE.md)
-- [18-minute Loom walkthrough](docs/LOOM_SCRIPT.md)
-- [Submission status and remaining steps](docs/SUBMISSION.md)
-- [Reference lesson](examples/reference_lesson.md)
+- [Groq setup and troubleshooting](docs/FREE_SETUP.md)
+- [Live evaluation evidence](examples/live-evidence/README.md)
+- [Calibration reference lesson](examples/reference_lesson.md)
 
 The lesson facts are grounded in [AWS's RAG explanation](https://aws.amazon.com/what-is/retrieval-augmented-generation/), the [original RAG research paper](https://arxiv.org/abs/2005.11401), and [Microsoft's RAG overview](https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview). The local source pack contains curated paraphrases and review metadata; the runtime does not browse those sites.
