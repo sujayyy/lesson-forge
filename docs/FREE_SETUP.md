@@ -59,3 +59,13 @@ These are real model calls, despite using a free plan. The same ten-check gate a
 References checked November 15, 2026: [Groq free-plan limits](https://console.groq.com/docs/rate-limits), [compatible endpoint](https://console.groq.com/docs/openai), [JSON output](https://console.groq.com/docs/structured-outputs). Both selected models appear in the published free-plan limits; your account's Limits page is authoritative. The model ID prefix `openai/` identifies the model family; these requests go to Groq and use Groq credentials.
 
 The launcher now uses gpt-oss-120b for both roles in separate requests, following repeated instruction-following failures from the smaller generator. This remains within the published free-plan model list. Independent requests do not remove shared model blind spots.
+
+## Diagnose a saved generation error
+
+To test the evaluator against a draft already saved by a failed run, use:
+
+```zsh
+python3 groq_run.py diagnose --run runs/YOUR_RUN_DIRECTORY
+```
+
+Replace `YOUR_RUN_DIRECTORY` with the generation run name. This makes one logical evaluator call (with at most one transport retry), preserves the old run and saves a separate diagnostic report. `DIAGNOSTIC OK` confirms a valid response, not an accepted lesson. Inspect the listed failing checks. After changes to the evaluator output contract, run full calibration again before treating the system as ready to submit.

@@ -20,12 +20,15 @@ def configure():
 
 def main():
     parser = argparse.ArgumentParser(description="Groq workflow launcher; never saves or prints API keys")
-    parser.add_argument("action", choices=["check", "calibrate", "generate", "error-demo"])
+    parser.add_argument("action", choices=["check", "calibrate", "generate", "error-demo", "diagnose"])
+    parser.add_argument("--run", help="Saved generation run to diagnose")
     parser.add_argument("--start-at", choices=["reference", "false_guarantee", "false_retraining",
                         "unsupported_example_answer", "unexplained_jargon", "missing_practice", "instruction_attack"])
     args = parser.parse_args()
     if args.start_at and args.action != "calibrate":
         parser.error("--start-at is only available for calibration")
+    if bool(args.run) != (args.action == "diagnose"):
+        parser.error("diagnose requires --run; --run is only available for diagnose")
     configure()
     print("Provider: Groq; endpoint configuration loaded from this launcher.", flush=True)
     if args.action == "check":
@@ -41,6 +44,11 @@ def main():
     os.environ["LLM_API_KEY"] = key
     from lesson_forge.provider import ProviderError
     try:
+        if args.action == "diagnose":
+            from lesson_forge.diagnose import run as diagnose
+            from lesson_forge.provider import APIProvider
+            from lesson_forge.demo import ROOT
+            return diagnose(APIProvider(), args.run, ROOT / "runs")
         if args.action == "calibrate":
             from lesson_forge.calibrate import main as calibrate
             return calibrate(start_at=args.start_at)
@@ -49,7 +57,7 @@ def main():
         if args.action == "error-demo":
             sys.argv += ["--inject-error", "first"]
         return run()
-    except ProviderError as exc:
+    except (ProviderError, ValueError, KeyError, OSError) as exc:
         print("ERROR:", exc)
         return 1
 

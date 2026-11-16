@@ -6,7 +6,8 @@ import time
 from urllib.request import Request, urlopen, build_opener, HTTPRedirectHandler
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
-from .schemas import strict_response_format
+from .schemas import strict_response_format, evidence_lines, resolve_evidence, CONTRACT_VERSION
+from .prompts import EVALUATOR, EVALUATOR_WITH_IDS
 
 
 class ProviderError(RuntimeError):
@@ -44,11 +45,18 @@ class APIProvider:
 
     def complete(self, role, system, payload):
         model = self.generator_model if role == "generator" else self.evaluator_model
+        groq_strict = urlparse(self.base_url).hostname == "api.groq.com" and model in {"openai/gpt-oss-20b", "openai/gpt-oss-120b"}
+        use_evidence_ids = groq_strict and role == "evaluator"
+        wire_payload = payload
+        if use_evidence_ids:
+            wire_payload = {k: v for k, v in payload.items() if k != "evidence_candidates"}
+            wire_payload["evidence_lines"] = evidence_lines(payload["lesson"])
+            system = EVALUATOR_WITH_IDS if system == EVALUATOR else system + "\nReturn evidence_id from evidence_lines instead of evidence text."
         request_body = {"model": model, "messages": [
             {"role": "system", "content": system},
-            {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
+            {"role": "user", "content": json.dumps(wire_payload, ensure_ascii=False)}],
             "response_format": {"type": "json_object"}, "max_completion_tokens": self.max_tokens}
-        if urlparse(self.base_url).hostname == "api.groq.com" and model in {"openai/gpt-oss-20b", "openai/gpt-oss-120b"}:
+        if groq_strict:
             request_body["reasoning_effort"] = "low"
             request_body["response_format"] = strict_response_format(role, payload)
         data = json.dumps(request_body).encode()
@@ -82,10 +90,17 @@ class APIProvider:
                 content = choice["message"].get("content")
                 if not isinstance(content, str):
                     raise ProviderError("Provider did not return text")
-                self.usage.append({"role": role, "model": model, "usage": value.get("usage", {}),
+                entry = {"role": role, "model": model, "usage": value.get("usage", {}),
                                    "elapsed_seconds": round(time.monotonic() - started, 2), "http_attempts": attempt + 1,
-                                   "retry_errors": retry_errors})
-                return json.loads(content)
+                                   "retry_errors": retry_errors}
+                self.usage.append(entry)
+                result = json.loads(content)
+                if use_evidence_ids:
+                    # Retain the wire response and mapping before local validation.
+                    entry.update(response_contract=CONTRACT_VERSION, wire_output=result,
+                                 evidence_lines=wire_payload["evidence_lines"], system_prompt=system)
+                    return resolve_evidence(result, payload["lesson"])
+                return result
             except HTTPError as exc:
                 # Expose only known diagnostic codes, never provider messages
                 # that may echo credentials or user content.

@@ -115,6 +115,32 @@ class PipelineTests(unittest.TestCase):
         self.assertEqual(manifest["status"], "ERROR")
         self.assertFalse((folder / "final_lesson.md").exists())
 
+    def test_diagnostic_preserves_original_and_does_not_release(self):
+        from lesson_forge.diagnose import run as diagnose
+        import contextlib, io
+        folder, _ = self.run_pipeline(injection="always")
+        before = {p.name: p.read_bytes() for p in folder.iterdir() if p.is_file()}
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(diagnose(DemoProvider(), folder, self.root / "diagnostics"), 0)
+        report = json.loads(next((self.root / "diagnostics").glob("*/diagnostic.json")).read_text())
+        self.assertEqual(report["status"], "VALID_RESPONSE")
+        self.assertFalse(next(c["passed"] for c in report["checks"] if c["id"] == "accuracy"))
+        self.assertFalse(list(self.root.rglob("final_lesson.md")))
+        self.assertEqual(before, {p.name: p.read_bytes() for p in folder.iterdir() if p.is_file()})
+
+    def test_diagnostic_records_provider_failure(self):
+        from lesson_forge.diagnose import run as diagnose
+        import contextlib, io
+        folder, _ = self.run_pipeline(injection="always")
+        class Broken(DemoProvider):
+            def complete(self, *args):
+                raise ProviderError("Provider HTTP 400: json_validate_failed")
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(diagnose(Broken(), folder, self.root / "diagnostics"), 1)
+        report = json.loads(next((self.root / "diagnostics").glob("*/diagnostic.json")).read_text())
+        self.assertEqual(report["status"], "ERROR")
+        self.assertNotIn("checks", report)
+
     def test_live_release_branch_with_mock_provider(self):
         # A unit-test stub, not evidence that any real model was called.
         class LiveStub(DemoProvider):
@@ -271,10 +297,56 @@ class ProviderTests(unittest.TestCase):
         self.assertFalse(schema["additionalProperties"])
         item = schema["properties"]["checks"]["items"]
         self.assertFalse(item["additionalProperties"])
-        self.assertEqual(set(item["required"]), {"id", "passed", "reason", "evidence", "fix"})
+        self.assertEqual(set(item["required"]), {"id", "passed", "reason", "evidence_id", "fix"})
         self.assertEqual(set(item["properties"]["id"]["enum"]), set(CRITERIA))
         self.assertEqual(item["properties"]["passed"]["type"], "boolean")
-        self.assertEqual(item["properties"]["evidence"]["enum"], ['', '## Limits', 'A sentence with "quotes".', '  Keep spacing.'])
+        self.assertEqual(item["properties"]["evidence_id"]["enum"], ['', 'L1', 'L2', 'L3'])
+        sent = json.loads(json.loads(call.call_args.args[0].data)["messages"][1]["content"])
+        self.assertNotIn("evidence_candidates", sent)
+        self.assertEqual(sent["evidence_lines"]["L2"], 'A sentence with "quotes".')
+
+    def test_evidence_ids_resolve_exact_unicode_and_preserve_wire_audit(self):
+        from unittest.mock import MagicMock
+        from lesson_forge.rubric import CRITERIA
+        from lesson_forge.prompts import EVALUATOR
+        lesson = '## Limits\n  A “quote” with 5\u202fpm, backslash \\ and Retrieval‑Augmented text.\n'
+        wire = {"checks": [{"id": key, "passed": True, "reason": "Test reason", "evidence_id": "L2", "fix": ""} for key in CRITERIA]}
+        with patch.dict("os.environ", {"LLM_BASE_URL": "https://api.groq.com/openai/v1", "EVALUATOR_MODEL": "openai/gpt-oss-120b"}):
+            client = APIProvider()
+        response = MagicMock()
+        response.__enter__.return_value = response
+        response.read.return_value = json.dumps({"choices": [{"finish_reason": "stop", "message": {"content": json.dumps(wire)}}]}).encode()
+        with patch.object(client.opener, "open", return_value=response) as call:
+            result = client.complete("evaluator", EVALUATOR, {"lesson": lesson})
+        checks = validate_judgment(result, lesson)
+        self.assertTrue(all(c["evidence"] == lesson.splitlines()[1] for c in checks))
+        self.assertEqual(client.usage[0]["wire_output"], wire)
+        self.assertEqual(client.usage[0]["response_contract"], "evidence-line-ids-v1")
+        self.assertEqual(client.usage[0]["evidence_lines"]["L2"], lesson.splitlines()[1])
+        system = json.loads(call.call_args.args[0].data)["messages"][0]["content"]
+        self.assertIn("INDEPENDENT CRITERION REVIEW", system)
+        self.assertIn('"evidence_id"', system)
+        self.assertNotIn("copy\nit unchanged into evidence", system)
+
+    def test_evidence_resolution_rejects_invalid_ids_and_preserves_verdicts(self):
+        from lesson_forge.schemas import resolve_evidence
+        from lesson_forge.rubric import CRITERIA
+        original = {"checks": [{"id": key, "passed": True, "reason": "Test", "evidence_id": "L1", "fix": ""} for key in CRITERIA]}
+        for bad_id in ("L999", 1, None, [], "Some invented quote"):
+            wire = copy.deepcopy(original)
+            wire["checks"][0]["evidence_id"] = bad_id
+            with self.assertRaises(ValueError):
+                resolve_evidence(wire, "A real line.")
+        for malformed in ([], {"checks": [{}]}, {"checks": [], "score": 100}):
+            with self.assertRaises(ValueError):
+                resolve_evidence(malformed, "A real line.")
+        wire = copy.deepcopy(original)
+        wire["checks"][0].update(passed=False, evidence_id="", fix="Add missing information.")
+        checks = validate_judgment(resolve_evidence(wire, "A real line."), "A real line.")
+        self.assertFalse(checks[0]["passed"])
+        wire["checks"][0]["passed"] = True
+        with self.assertRaises(ValueError):
+            validate_judgment(resolve_evidence(wire, "A real line."), "A real line.")
 
     def test_quota_error_is_safe_and_not_retried(self):
         import io
