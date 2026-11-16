@@ -26,7 +26,7 @@ The Google Doc link is https://docs.google.com/document/d/1UIkbHkxC04nLFPPOgIFrP
 
 ## 3. Prepare your recording
 
-Open Terminal, paste `open -a TextEdit /Users/ivar/Projects/lesson-forge/docs/LOOM_SCRIPT.md`, and press Enter. The rewritten guide has arrow-by-arrow Finder navigation, exact search text, commands, spoken paragraphs, and instructions for each possible live result. No code editor or links are required.
+Open Terminal, paste `open -a TextEdit /Users/ivar/Projects/lesson-forge/docs/LOOM_SCRIPT.md`, and press Enter. The guide now starts immediately AFTER the source-facts section already recorded, at approximately minute 5. It contains only the remaining screen actions and narration, using direct file-opening commands and exact search text. Keep the completed footage; do not restart the introduction or source explanation.
 
 - Use screen plus camera and keep your face visible.
 - Confirm that your account can record 15–20 minutes before starting. If it cannot, arrange a supported recording option before the final take; do not discover the limit mid-demo.
@@ -35,7 +35,7 @@ Open Terminal, paste `open -a TextEdit /Users/ivar/Projects/lesson-forge/docs/LO
 - Open the saved successful report, Google Doc, repository and relevant source files.
 - Rehearse explaining the gate, retry bounds, evaluator limitations and memory in your own words.
 
-The script shows the saved ordinary successful run first, then starts a fresh live injected workflow while you explain the architecture. It explains memory by showing its implementation and explicitly labels the offline exhaustion demonstration. Model outputs can vary; describe the result actually shown.
+The continuation briefly shows the current rate-limit error, then explicitly switches to the earlier successful deliberate-error report and the separate ordinary submission report. It does not start another API job. Memory is explained from its implementation; only the offline exhaustion demonstration and local tests are executed. Saved evidence is not presented as new live execution.
 
 ## 4. Finish and submit
 
