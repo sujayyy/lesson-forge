@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": true,
+      "reason": "All technical claims match the supplied source facts; no invented capabilities or guarantees are present.",
+      "fix": "",
+      "evidence": "When the AI only relies on its earlier learning, it may forget recent facts or may not know private details. By adding a fresh passage, we give the model something it definitely knows. Experiments show that this often makes answers more factual, though it does not guarantee every answer is correct [S2]."
+    },
+    {
+      "id": "foundations",
+      "passed": true,
+      "reason": "The lesson explains Retrieval‑Augmented Generation, AI, and language models from zero, without assuming programming knowledge.",
+      "fix": "",
+      "evidence": "AI means software that can do tasks that usually need human thinking, like answering questions. A language model is a type of AI that has read lots of written material and learned how words fit together. Its learning is called *training* – it looks at many examples and remembers patterns. The model’s original training does not contain our personal notes, so we bring those notes in at the time of answering [S1]."
+    },
+    {
+      "id": "coverage",
+      "passed": true,
+      "reason": "The lesson covers what RAG is, why it matters, and the four‑step mechanism in correct order, and notes that it does not require vector search or internet access.",
+      "fix": "",
+      "evidence": "RAG follows four easy steps:"
+    },
+    {
+      "id": "example",
+      "passed": true,
+      "reason": "A fictional Indian college example is provided with source note, learner question, retrieved passage, correct answer, and an unanswered question handled properly.",
+      "fix": "",
+      "evidence": "Imagine a notice posted on the wall of **Lotus College** library:"
+    },
+    {
+      "id": "language",
+      "passed": false,
+      "reason": "The term \"embeddings\" appears in L15 without any prior everyday explanation, violating the requirement to explain all technical terms before first substantive use.",
+      "fix": "Add a brief plain‑language explanation before L15, e.g., \"embeddings are just a way to turn words into numbers so a computer can compare them\" or remove the term entirely.",
+      "evidence": "We say “search the notes” instead of “query an index” and “use the supplied text” instead of talking about embeddings or databases. The model does not learn again from the passage; it only uses it for this answer [S1][S3]."
+    },
+    {
+      "id": "flow",
+      "passed": true,
+      "reason": "The lesson presents prerequisites first, then the mechanism, a worked example, limits, and practice questions in a logical, non‑contradictory order.",
+      "fix": "",
+      "evidence": "AI means software that can do tasks that usually need human thinking, like answering questions. A language model is a type of AI that has read lots of written material and learned how words fit together. Its learning is called *training* – it looks at many examples and remembers patterns. The model’s original training does not contain our personal notes, so we bring those notes in at the time of answering [S1]."
+    },
+    {
+      "id": "practice",
+      "passed": true,
+      "reason": "Two answerable learner questions are included with correct answers and short explanations, testing the mechanism and handling of missing evidence.",
+      "fix": "",
+      "evidence": "1. **How does the four‑step RAG process help the model give a better answer?**"
+    }
+  ]
+}

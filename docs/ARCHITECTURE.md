@@ -11,7 +11,7 @@
 7. Test success, repair, exhaustion, malformed verdicts, provider errors, and learning isolation.
 8. Run live evaluator mutation probes and an end-to-end live generation before claiming submission readiness.
 
-Steps 1–7 have local implementation and test evidence. Step 8 requires configured provider access.
+Steps 1–8 now have observed evidence: 39 local tests, seven passing live regression probes, and a live release after two content repairs. See `examples/live-evidence/README.md`. The face-visible recording and separate injected workflow rehearsal remain outstanding.
 
 ## Components
 
@@ -92,3 +92,7 @@ Readability thresholds are practical heuristics: line breaks count as boundaries
 Run `20261116T064752Z-a71dbecb` reproduced `json_validate_failed` on both evaluator HTTP attempts. The provider error does not establish a specific cause. As a mitigation, the evaluator schema now uses short line IDs instead of arbitrary full lesson lines as enum values. For that saved candidate, the serialized enum shrank from 4,098 to 247 bytes. The evaluator still reviews the complete candidate and chooses its own supporting or offending line. The application resolves that choice mechanically; it does not invent evidence or change verdicts. Both provider wire data and resolved judgments remain inspectable.
 
 The diagnostic launcher evaluates the last saved draft from a specified generation run in one logical call, writes a separate diagnostic report and never publishes a lesson, updates memory or changes the original run. `VALID_RESPONSE` means the response passed format validation, even when lesson checks fail. It is not a release decision. The new evidence contract requires fresh live regression calibration before submission; earlier calibration passes describe the previous contract. Local tests cover exact Unicode/whitespace preservation, invalid IDs, missing evidence, audit preservation and diagnostic isolation. Live behavior remains unverified until the user runs the diagnostic.
+
+## Verified live release
+
+Calibration `calibration-20261116T065407659883Z` passed all seven probes using evidence IDs. Generation `20261116T070057Z-b2b5b578` rejected language on attempt 1 and example on attempt 2, then shipped attempt 3 with ten passing checks. Exact artifacts are included in `examples/live-evidence/`. This demonstrates a working autonomous repair loop on one topic, not general educational quality. The evidence README notes remaining wording weaknesses visible despite the automated pass.

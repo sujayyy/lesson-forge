@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": false,
+      "reason": "The lesson states that looking up a notice retrains the model each time, which contradicts the source fact that ordinary retrieval does not retrain the language model.",
+      "fix": "Replace the sentence with: \"Looking up a notice does not retrain the model; it simply provides extra information for the current question.\"",
+      "evidence": "Looking up a notice retrains the model every time. [S1]"
+    },
+    {
+      "id": "foundations",
+      "passed": true,
+      "reason": "The lesson explains AI, language models, and expands Retrieval-Augmented Generation before using these terms.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "coverage",
+      "passed": true,
+      "reason": "The lesson describes what RAG is, why it matters, and the correct step‑by‑step mechanism without claiming vector search or internet access is required.",
+      "fix": "",
+      "evidence": "RAG stands for Retrieval-Augmented Generation."
+    },
+    {
+      "id": "example",
+      "passed": true,
+      "reason": "A fictional Indian college example includes the source note, a learner question, the retrieved passage, a supported answer, and an unanswered question with an appropriate response.",
+      "fix": "",
+      "evidence": "Source note: \"Lotus College library opens at 9 am and closes at 5 pm on weekdays.\""
+    },
+    {
+      "id": "language",
+      "passed": true,
+      "reason": "All technical terms (AI, language model, retrieval, augmentation, generation, passages) are explained in everyday language before their first substantive use.",
+      "fix": "",
+      "evidence": "A language model is a kind of AI trained on text to produce text."
+    },
+    {
+      "id": "flow",
+      "passed": true,
+      "reason": "The lesson presents prerequisites first, then the mechanism, a worked example, limits, practice questions, and a recap, with no contradictory advice.",
+      "fix": "",
+      "evidence": "## How it works"
+    },
+    {
+      "id": "practice",
+      "passed": true,
+      "reason": "Two practice questions are provided with correct answers and brief explanations that test understanding of the mechanism and handling missing evidence.",
+      "fix": "",
+      "evidence": "Question one: Why must the system find a passage before writing the answer?"
+    }
+  ]
+}

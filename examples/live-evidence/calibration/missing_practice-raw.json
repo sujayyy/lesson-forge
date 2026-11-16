@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": true,
+      "reason": "All technical statements align with the supplied source facts; no invented capabilities or guarantees are present.",
+      "fix": "",
+      "evidence": "RAG can still give wrong answers. [S2]"
+    },
+    {
+      "id": "foundations",
+      "passed": true,
+      "reason": "The lesson explains AI, language models, and expands the RAG acronym from zero, without assuming programming knowledge.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "coverage",
+      "passed": true,
+      "reason": "The lesson describes what RAG is, why it matters, and details the mechanism in the correct order, without claiming required vector search or internet access.",
+      "fix": "",
+      "evidence": "## How it works"
+    },
+    {
+      "id": "example",
+      "passed": true,
+      "reason": "A fictional Indian college example includes the source note, learner question, retrieved passage, supported answer, and an unanswered question with appropriate response.",
+      "fix": "",
+      "evidence": "Source note: \"Lotus College library opens at 9 am and closes at 5 pm on weekdays.\""
+    },
+    {
+      "id": "language",
+      "passed": true,
+      "reason": "Every technical term (e.g., AI, language model, retrieval, passage) is explained at its first substantive use in simple everyday English.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "flow",
+      "passed": true,
+      "reason": "The lesson presents prerequisites first, then the mechanism, followed by a worked example, limits, and a recap, maintaining a coherent, non‑contradictory sequence.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "practice",
+      "passed": false,
+      "reason": "The lesson does not include the required two answerable learner questions with explanations; it only provides example interactions but no separate practice Q&A.",
+      "fix": "Add a practice section with at least two learner questions: one asking how the RAG mechanism works (e.g., 'How does the system find the right passage?') with a short explanation, and another asking what to do when the notes do not contain an answer, with a brief answer explaining to state that the information is missing.",
+      "evidence": ""
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": false,
+      "reason": "The lesson states \"RAG guarantees that every answer is correct\" (L64), which directly contradicts source S2 that says RAG can still give wrong answers (S2 fact). This invented guarantee makes the claim inaccurate.",
+      "fix": "Remove the guarantee sentence and replace it with a statement that RAG can still produce incorrect answers, citing S2.",
+      "evidence": "RAG guarantees that every answer is correct."
+    },
+    {
+      "id": "foundations",
+      "passed": true,
+      "reason": "The lesson explains AI as software, defines a language model, and expands Retrieval-Augmented Generation, providing prerequisite knowledge without assuming programming background.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "coverage",
+      "passed": true,
+      "reason": "The lesson covers what RAG is, why it matters, and the mechanism in the correct order, and avoids claiming vector search or internet access is required.",
+      "fix": "",
+      "evidence": "RAG stands for Retrieval-Augmented Generation."
+    },
+    {
+      "id": "example",
+      "passed": true,
+      "reason": "A fictional Indian college example is provided with a source note, a question, the retrieved passage, a supported answer, and an unanswered question, matching the required format.",
+      "fix": "",
+      "evidence": "Source note: \"Lotus College library opens at 9 am and closes at 5 pm on weekdays.\""
+    },
+    {
+      "id": "language",
+      "passed": true,
+      "reason": "All technical terms (AI, language model, Retrieval-Augmented Generation, retrieval, augmentation, generation, passages) are explained in everyday language before their substantive use.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "flow",
+      "passed": false,
+      "reason": "The \"Limits\" section contains contradictory statements: it first says \"RAG guarantees that every answer is correct\" (L64) and then immediately says \"RAG can still give wrong answers\" (L65), violating the requirement for non‑contradictory advice.",
+      "fix": "Remove or rephrase the guarantee claim to be consistent with the later statement that RAG can produce incorrect answers.",
+      "evidence": "RAG guarantees that every answer is correct."
+    },
+    {
+      "id": "practice",
+      "passed": true,
+      "reason": "Two learner questions are included with correct answers and brief explanations, testing understanding of the mechanism and handling missing evidence.",
+      "fix": "",
+      "evidence": "Question one: Why must the system find a passage before writing the answer?"
+    }
+  ]
+}

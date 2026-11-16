@@ -2,37 +2,24 @@
 
 Repository: https://github.com/sujayyy/lesson-forge
 
-For the full sequence, follow [Exact next steps](NEXT_STEPS.md).
+## Verified on November 16, 2026
 
-## Completed
+- Bounded generate → evaluate → repair controller, ten binary checks, persistent memory and audit logging.
+- 39 passing local unit tests.
+- All seven live calibration probes passed using the current evidence-ID response format.
+- Live generation shipped on attempt three, after language and example rejections.
+- Exact accepted lesson, all three drafts, revisions and calibration results published in [live evidence](../examples/live-evidence/README.md).
+- Google Doc replaced with the accepted lesson, read back against its prose, and shared as Anyone with the link — Viewer with user approval.
 
-- Python generate → evaluate → regenerate controller with at most two retries.
-- Ten hard pass/fail checkpoints, including an independent API evaluator.
-- Fail-closed verdict validation and no release after exhausted retries or API errors.
-- Persistent SQLite failure memory, human feedback command and curated prompt evolution.
-- Exact candidate drafts, reasons, evidence, payloads, manifests and actual revision diffs.
-- Offline deliberate-error repair rehearsal and 24 passing unit tests.
-- Live evaluator calibration command with seven probes.
-- Beginner RAG reference lesson, architecture notes and an 18-minute Loom runbook.
-- Project pushed to `sujayyy/lesson-forge` on the `main` branch.
+## Still required
 
-## Still required for an honest final submission
+1. Run `python3 groq_run.py error-demo` and inspect the false guarantee being rejected under accuracy. Preserve its audit, even if the run ultimately withholds release.
+2. Open the finished Google Doc in a private browser as a final viewer-access check. The accepted source is [final_lesson.md](../examples/live-evidence/generation/final_lesson.md).
+3. Record your own face-visible 15–20 minute walkthrough using [LOOM_SCRIPT.md](LOOM_SCRIPT.md).
+4. Check GitHub, document and video access; submit the three links through the assessment form yourself.
 
-1. Configure a model provider API key and model names locally. Run the live calibration and review every result.
-2. Run the live generation and deliberate-error demonstration. Save the actual accepted lesson and logs. If the evaluator fails a probe, fix and rerun; do not replace evidence with scripted results.
-3. Replace the reference draft in the Google Doc with the accepted live lesson and update its status/title.
-4. Add reviewed live-run evidence and update the verification status in this repository after those runs succeed.
-5. Record the face-visible Loom video using `LOOM_SCRIPT.md`, then check reviewer access to all three links.
-6. Submit through the assessment form yourself after reviewing the final materials.
-
-The local reference lesson and offline rehearsal are useful deliverables, but they are not represented as a completed live submission. No final application form has been submitted.
+No video or application-form submission is claimed. See [NEXT_STEPS.md](NEXT_STEPS.md) for the exact remaining actions.
 
 ## Lesson document
 
-[Reference lesson draft in Google Docs](https://docs.google.com/document/d/1UIkbHkxC04nLFPPOgIFrPo4tjKOlgTwUEFcvNu61E8s/edit)
-
-The document's status line states that live generation and evaluation are pending. Reviewer sharing access has not been configured.
-
-## Updating the repository
-
-The remote is configured. After reviewing and committing changes, run `git push` from the project directory. Runtime databases and logs are ignored; the included example audit contains only the public reference fixture.
+https://docs.google.com/document/d/1UIkbHkxC04nLFPPOgIFrPo4tjKOlgTwUEFcvNu61E8s/edit

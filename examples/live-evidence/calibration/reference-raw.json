@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": true,
+      "reason": "All technical statements match the supplied source facts; no invented capabilities or guarantees are present.",
+      "fix": "",
+      "evidence": "The model then uses that information to write an answer. [S1]"
+    },
+    {
+      "id": "foundations",
+      "passed": true,
+      "reason": "The lesson explains AI, language models, and each part of Retrieval‑Augmented Generation from zero, without assuming programming knowledge.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "coverage",
+      "passed": true,
+      "reason": "The lesson describes what RAG is, why it matters, and the correct step‑by‑step mechanism in proper order, without claiming unnecessary requirements.",
+      "fix": "",
+      "evidence": "## Why it helps"
+    },
+    {
+      "id": "example",
+      "passed": true,
+      "reason": "A fully fictional Indian college example is provided with source note, learner question, retrieved passage, supported answer, and an unanswered question with appropriate response.",
+      "fix": "",
+      "evidence": "Source note: \"Lotus College library opens at 9 am and closes at 5 pm on weekdays.\""
+    },
+    {
+      "id": "language",
+      "passed": true,
+      "reason": "Every technical term (AI, language model, retrieval, augmentation, generation, passage) is explained in everyday language before its substantive use.",
+      "fix": "",
+      "evidence": "Long documents can be split into smaller pieces called passages."
+    },
+    {
+      "id": "flow",
+      "passed": true,
+      "reason": "The lesson follows the required sequence: prerequisites, mechanism, worked example, limits, practice, and recap, without contradictions or missing steps.",
+      "fix": "",
+      "evidence": "## How it works"
+    },
+    {
+      "id": "practice",
+      "passed": true,
+      "reason": "Two learner questions are included, each with a correct answer and brief explanation testing understanding of the mechanism and handling missing evidence.",
+      "fix": "",
+      "evidence": "Question one: Why must the system find a passage before writing the answer?"
+    }
+  ]
+}

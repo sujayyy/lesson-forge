@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": false,
+      "reason": "The lesson states \"RAG guarantees that every answer is correct\" (L64), which directly contradicts source facts that RAG can still give wrong answers and does not guarantee correctness.",
+      "fix": "Remove the guarantee claim and replace with a statement that RAG can still produce incorrect answers, citing the source.",
+      "evidence": "RAG guarantees that every answer is correct."
+    },
+    {
+      "id": "foundations",
+      "passed": true,
+      "reason": "The lesson explains AI as software that does tasks needing human intelligence and defines a language model as AI trained on text to produce text, satisfying the prerequisite explanation.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "coverage",
+      "passed": true,
+      "reason": "The lesson describes the full RAG mechanism in correct order: prepare documents, retrieve passages, give them with the question to the model, and generate an answer, and notes that ordinary retrieval does not retrain the model and that RAG can still be wrong.",
+      "fix": "",
+      "evidence": "## How it works"
+    },
+    {
+      "id": "example",
+      "passed": true,
+      "reason": "A fictional Indian college example is provided with a source note, a learner question, the retrieved passage, and a supported answer; an unanswered question is also shown with an appropriate response.",
+      "fix": "",
+      "evidence": "## A worked example"
+    },
+    {
+      "id": "language",
+      "passed": false,
+      "reason": "The term \"passages\" is introduced at L39 without an everyday explanation, violating the requirement to explain technical terms before substantive use.",
+      "fix": "Add a simple definition, e.g., \"A passage is a short piece of text taken from a larger document.\" before L39.",
+      "evidence": "Long documents can be split into smaller pieces called passages."
+    },
+    {
+      "id": "flow",
+      "passed": true,
+      "reason": "The lesson follows the required sequence: prerequisites, mechanism, worked example, limits, practice, and recap, without contradictory advice.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "practice",
+      "passed": true,
+      "reason": "Two learner questions are included with correct answers and brief explanations, testing understanding of the mechanism and handling missing evidence.",
+      "fix": "",
+      "evidence": "## Try it yourself"
+    }
+  ]
+}

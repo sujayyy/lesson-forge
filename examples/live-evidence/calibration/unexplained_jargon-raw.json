@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": false,
+      "reason": "The lesson claims \"Use ANN over dense embeddings with cosine similarity and reranking\" which is not supported by any supplied source fact; sources only mention keyword, vector, or hybrid search and do not specify ANN or dense embeddings.",
+      "fix": "Replace the sentence with a statement that matches the sources, e.g., \"The system can use simple keyword search or vector search to find relevant passages.\"",
+      "evidence": "Use ANN over dense embeddings with cosine similarity and reranking. [S3]"
+    },
+    {
+      "id": "foundations",
+      "passed": true,
+      "reason": "The lesson explains AI as software that performs tasks needing human intelligence and defines a language model as AI trained on text to produce text, and expands RAG as Retrieval‑Augmented Generation, meeting the prerequisite explanation requirement.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "coverage",
+      "passed": true,
+      "reason": "The lesson states what RAG is, why it matters (keeps answers up‑to‑date), and describes the mechanism in the correct order: prepare documents, retrieve passages, give them with the question to the model, then generate an answer, without claiming vector search or internet access is required.",
+      "fix": "",
+      "evidence": "## How it works"
+    },
+    {
+      "id": "example",
+      "passed": true,
+      "reason": "A fictional Indian college example is provided with a source note, a learner question, the retrieved passage, a supported answer, and an unanswered question where the system correctly says the information is missing.",
+      "fix": "",
+      "evidence": "Source note: \"Lotus College library opens at 9 am and closes at 5 pm on weekdays.\""
+    },
+    {
+      "id": "language",
+      "passed": false,
+      "reason": "Technical terms \"ANN\", \"dense embeddings\", \"cosine similarity\", and \"reranking\" appear without any everyday‑language explanation before their first substantive use.",
+      "fix": "Add simple explanations, e.g., \"ANN (a method that quickly finds similar pieces of text), dense embeddings (turning text into numbers), cosine similarity (a way to compare those numbers), and reranking (checking the results again) are advanced techniques that can be used but are not required.\"",
+      "evidence": "Use ANN over dense embeddings with cosine similarity and reranking. [S3]"
+    },
+    {
+      "id": "flow",
+      "passed": true,
+      "reason": "The lesson follows the required progression: prerequisites, mechanism, worked example, limits, practice questions, and recap, without contradictory advice.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "practice",
+      "passed": true,
+      "reason": "Two learner questions are included: one asks why a passage must be found first, the other asks about using a notice for Sunday hours; both receive correct answers with brief explanations.",
+      "fix": "",
+      "evidence": "Question one: Why must the system find a passage before writing the answer?"
+    }
+  ]
+}

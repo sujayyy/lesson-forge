@@ -4,7 +4,7 @@ A self-evaluating lesson generator for a class-12 graduate from India with limit
 
 **Input:** a topic and curated source pack. **Output:** a lesson only when all ten checkpoints pass, plus every rejected draft, reason, and actual revision diff. The controller allows at most two regenerations.
 
-**Current verification:** offline control-flow tests and a scripted error-repair rehearsal pass. A live API run and live evaluator calibration have **not** been performed. The included lesson is an authored reference fixture, not a claimed live-generated result. See [submission status](docs/SUBMISSION.md).
+**Current verification (November 16, 2026):** all seven live evaluator probes passed with Groq `openai/gpt-oss-120b`. A live generation rejected draft 1 for language and draft 2 for an unlabelled fictional example, then released draft 3 with all ten checks passing. See the [accepted lesson](examples/live-evidence/generation/final_lesson.md), [rejection log](examples/live-evidence/generation/rejection_log.json), and [live evidence](examples/live-evidence/README.md). 39 local unit tests pass. The separate deliberate-error video rehearsal and face-visible recording remain to be completed. See [submission status](docs/SUBMISSION.md).
 
 ## Run in one minute
 
@@ -125,9 +125,9 @@ Each run creates a new directory; previous runs are never overwritten.
 
 Exit `0`: live release or explicitly labelled demo success. Exit `2`: retries exhausted, lesson withheld. Exit `1`: input, provider or evaluation error. A provider refusal, incomplete output, or invalid evaluator response stops the run; content regeneration is reserved for valid rubric failures.
 
-Maximum cost per generation run: three candidates × two role calls = six logical model calls. Each call allows one retry for network errors, rate limits, or server errors, with a 60-second socket timeout and 6,000 completion-token limit. Up to 12 HTTP attempts are possible. The timeout is a socket/network limit, not a strict end-to-end deadline. Returned usage is recorded; pricing depends on configured models and is not estimated here.
+Maximum cost per generation run: three candidates × two role calls = six logical model calls. Each call allows at most one retry for network errors, rate limits, server errors, or specific provider structured-output failures, with a 60-second socket timeout and 6,000 completion-token limit. Up to 12 HTTP attempts are possible. The timeout is a socket/network limit, not a strict end-to-end deadline. Returned usage is recorded; pricing depends on configured models and is not estimated here.
 
-`data/` and `runs/` are ignored by Git because prompts and logs may include user content. Sanitized offline evidence is included in `examples/demo-run/`.
+`data/` and `runs/` are ignored by Git because prompts and logs may include user content. Reviewed live evidence is included in `examples/live-evidence/`, alongside the separately labelled offline rehearsal in `examples/demo-run/`.
 
 ## Other topics
 

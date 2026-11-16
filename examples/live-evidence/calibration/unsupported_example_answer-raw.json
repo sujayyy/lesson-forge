@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": false,
+      "reason": "The answer in the worked example states the library closes at 7 pm, but the source note says it closes at 5 pm, violating the source facts.",
+      "fix": "Change the supported answer to \"It closes at 5 pm on weekdays, according to the library notice.\"",
+      "evidence": "A supported answer is: \"It closes at 7 pm on weekdays, according to the library notice.\""
+    },
+    {
+      "id": "foundations",
+      "passed": true,
+      "reason": "The lesson explains AI as software that performs tasks needing human intelligence and defines a language model as AI trained on text to produce text, satisfying the prerequisite explanation requirement.",
+      "fix": "",
+      "evidence": "A language model is a kind of AI trained on text to produce text."
+    },
+    {
+      "id": "coverage",
+      "passed": true,
+      "reason": "The lesson describes why RAG matters, then outlines the mechanism in the correct order: prepare notes, retrieve passages, give them with the question to the model, and generate an answer, without claiming vector search or internet access is required.",
+      "fix": "",
+      "evidence": "The order is: prepare notes, find useful text, give it to the model, then answer."
+    },
+    {
+      "id": "example",
+      "passed": false,
+      "reason": "The fictional example includes an answer that does not match the source note (claims 7 pm instead of 5 pm), so the example is not correctly supported and violates the requirement for a correct, source‑consistent example.",
+      "fix": "Correct the answer to match the source note (5 pm) and ensure the unsupported‑question response accurately states that the note lacks Sunday information.",
+      "evidence": "A supported answer is: \"It closes at 7 pm on weekdays, according to the library notice.\""
+    },
+    {
+      "id": "language",
+      "passed": true,
+      "reason": "All technical terms such as AI, language model, retrieval, augmentation, and generation are explained in everyday language before their first substantive use.",
+      "fix": "",
+      "evidence": "AI means artificial intelligence."
+    },
+    {
+      "id": "flow",
+      "passed": true,
+      "reason": "The lesson presents prerequisites first, then the mechanism, followed by a worked example, discussion of limits, and a practice section, maintaining a logical progression without contradictions.",
+      "fix": "",
+      "evidence": "Question one: Why must the system find a passage before writing the answer?"
+    },
+    {
+      "id": "practice",
+      "passed": true,
+      "reason": "Two learner questions are provided with correct answers and brief explanations, testing understanding of the mechanism and handling of missing evidence.",
+      "fix": "",
+      "evidence": "Question one: Why must the system find a passage before writing the answer?"
+    }
+  ]
+}

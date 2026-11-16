@@ -1,0 +1,59 @@
+{
+  "topic": "Introduction to RAG",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "AWS: What is Retrieval-Augmented Generation?",
+      "url": "https://aws.amazon.com/what-is/retrieval-augmented-generation/",
+      "facts": [
+        "RAG means Retrieval-Augmented Generation: find useful text, give it with a question to a language model, and use it to help write an answer.",
+        "A language model is software trained on text to produce text. Training means learning from examples. Its earlier training may not include new information or private notes.",
+        "Prepare readable notes before questions arrive. For a question, find useful text, give that text with the question to the model, and write an answer.",
+        "Looking up notes is not itself training the model again. New notes can supply new information for an answer."
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "Lewis et al.: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "url": "https://arxiv.org/abs/2005.11401",
+      "facts": [
+        "Experiments in the RAG paper found that retrieved information helped models write more factual answers than using only earlier learning. This does not guarantee that every answer is right."
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "Microsoft Learn: Retrieval augmented generation overview",
+      "url": "https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview",
+      "facts": [
+        "RAG can search a chosen set of notes. It does not have to search the public internet.",
+        "There are several ways to search notes. One simple way looks for matching words. Advanced search tools are not required for every RAG system.",
+        "The chosen text may be old, wrong for the question, or missing. The model can also make mistakes when using it.",
+        "A reference shows where information came from and helps readers check it. It does not prove an answer is correct. If the notes do not support an answer, say that instead of inventing one."
+      ]
+    }
+  ],
+  "required_headings": [
+    "Start here",
+    "What it means",
+    "Why it helps",
+    "How it works",
+    "A worked example",
+    "Limits",
+    "Try it yourself",
+    "Recap",
+    "Sources"
+  ],
+  "criteria": {
+    "accuracy": "Every technical claim agrees with the supplied source facts. No invented capabilities, guarantees, or real-world facts. Clearly label invented teaching examples. Check the whole lesson for contradictions, including its ending and answers.",
+    "foundations": "Explain the topic and every prerequisite from zero. For RAG: expand Retrieval-Augmented Generation, explain AI as software doing tasks that often need human intelligence, and explain a language model as software trained on text to produce text. Do not assume programming knowledge.",
+    "coverage": "Explain what the topic is, one concrete reason it matters, and its mechanism in correct order. For RAG: prepare searchable documents; retrieve relevant passages for a question; give passages plus question to a language model; generate an answer. Say ordinary retrieval does not retrain the model, and RAG can still be wrong. Do not claim vector search or internet access is required.",
+    "example": "Include one explicitly fictional, familiar Indian school/college example. Show the exact source note, a learner question, the retrieved passage, and an answer supported by that passage. Include an unanswered question and demonstrate saying the source does not contain the answer. Dates, numbers and conclusions must match the source note.",
+    "language": "Use everyday English suitable for a class-12 graduate from a non-English-medium background. No unexplained idioms or unnecessarily formal vocabulary. Explain every technical term at or before its first substantive use; the expanded topic title is allowed before its explanation. Optional advanced terms can be omitted. Short sentences alone are insufficient.",
+    "flow": "Teach prerequisites before the mechanism, then a worked example, then limits and practice. Each section develops the same topic without contradictory advice, distracting tangents or missing steps. The recap is accurate.",
+    "practice": "Include at least two answerable learner questions with correct answers and short explanations: one about how the mechanism works and one about what to do when evidence is missing. They must test understanding, not just acronym recall."
+  },
+  "persistent_hints": [],
+  "previous_lesson": "",
+  "failed_checks": [],
+  "mechanical_requirements": "450–1000 prose words; mean sentence/line <=18 words; longest <=32; at least two supplied source IDs cited in body and all cited URLs listed."
+}

@@ -1,0 +1,67 @@
+{
+  "topic": "Introduction to RAG",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "AWS: What is Retrieval-Augmented Generation?",
+      "url": "https://aws.amazon.com/what-is/retrieval-augmented-generation/",
+      "facts": [
+        "RAG means Retrieval-Augmented Generation: find useful text, give it with a question to a language model, and use it to help write an answer.",
+        "A language model is software trained on text to produce text. Training means learning from examples. Its earlier training may not include new information or private notes.",
+        "Prepare readable notes before questions arrive. For a question, find useful text, give that text with the question to the model, and write an answer.",
+        "Looking up notes is not itself training the model again. New notes can supply new information for an answer."
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "Lewis et al.: Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "url": "https://arxiv.org/abs/2005.11401",
+      "facts": [
+        "Experiments in the RAG paper found that retrieved information helped models write more factual answers than using only earlier learning. This does not guarantee that every answer is right."
+      ]
+    },
+    {
+      "id": "S3",
+      "title": "Microsoft Learn: Retrieval augmented generation overview",
+      "url": "https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview",
+      "facts": [
+        "RAG can search a chosen set of notes. It does not have to search the public internet.",
+        "There are several ways to search notes. One simple way looks for matching words. Advanced search tools are not required for every RAG system.",
+        "The chosen text may be old, wrong for the question, or missing. The model can also make mistakes when using it.",
+        "A reference shows where information came from and helps readers check it. It does not prove an answer is correct. If the notes do not support an answer, say that instead of inventing one."
+      ]
+    }
+  ],
+  "required_headings": [
+    "Start here",
+    "What it means",
+    "Why it helps",
+    "How it works",
+    "A worked example",
+    "Limits",
+    "Try it yourself",
+    "Recap",
+    "Sources"
+  ],
+  "criteria": {
+    "accuracy": "Every technical claim agrees with the supplied source facts. No invented capabilities, guarantees, or real-world facts. Clearly label invented teaching examples. Check the whole lesson for contradictions, including its ending and answers.",
+    "foundations": "Explain the topic and every prerequisite from zero. For RAG: expand Retrieval-Augmented Generation, explain AI as software doing tasks that often need human intelligence, and explain a language model as software trained on text to produce text. Do not assume programming knowledge.",
+    "coverage": "Explain what the topic is, one concrete reason it matters, and its mechanism in correct order. For RAG: prepare searchable documents; retrieve relevant passages for a question; give passages plus question to a language model; generate an answer. Say ordinary retrieval does not retrain the model, and RAG can still be wrong. Do not claim vector search or internet access is required.",
+    "example": "Include one explicitly fictional, familiar Indian school/college example. Show the exact source note, a learner question, the retrieved passage, and an answer supported by that passage. Include an unanswered question and demonstrate saying the source does not contain the answer. Dates, numbers and conclusions must match the source note.",
+    "language": "Use everyday English suitable for a class-12 graduate from a non-English-medium background. No unexplained idioms or unnecessarily formal vocabulary. Explain every technical term at or before its first substantive use; the expanded topic title is allowed before its explanation. Optional advanced terms can be omitted. Short sentences alone are insufficient.",
+    "flow": "Teach prerequisites before the mechanism, then a worked example, then limits and practice. Each section develops the same topic without contradictory advice, distracting tangents or missing steps. The recap is accurate.",
+    "practice": "Include at least two answerable learner questions with correct answers and short explanations: one about how the mechanism works and one about what to do when evidence is missing. They must test understanding, not just acronym recall."
+  },
+  "persistent_hints": [],
+  "previous_lesson": "# Introduction to Retrieval‑Augmented Generation (RAG)\n\n## Start here\nRetrieval‑Augmented Generation, or RAG, is a way to get better answers from an AI. First we ask a question. Then we look in our own notes for a short piece of text that may help. We give that text and the question to a language model – a computer program that can write sentences after learning from many examples. The model uses the text to write an answer. This whole process is called RAG because we **retrieve** (find) useful text and then **generate** (write) an answer [S1].\n\nAI means software that can do tasks that usually need human thinking, like answering questions. A language model is a type of AI that has read lots of written material and learned how words fit together. Its learning is called *training* – it looks at many examples and remembers patterns. The model’s original training does not contain our personal notes, so we bring those notes in at the time of answering [S1].\n\n## What it means\nIn simple words, RAG means “use our own notes to help the AI answer”. We do not change the AI’s brain. We only give it extra information at the moment we need an answer. This extra information can be a sentence, a paragraph, or any short passage that we think is useful.\n\n## Why it helps\nWhen the AI only relies on its earlier learning, it may forget recent facts or may not know private details. By adding a fresh passage, we give the model something it definitely knows. Experiments show that this often makes answers more factual, though it does not guarantee every answer is correct [S2].\n\n## How it works\nRAG follows four easy steps:\n1. **Prepare readable notes** – write short, clear sentences that anyone can read.\n2. **Find useful text** – when a question arrives, scan the notes and pick the passage that looks most relevant.\n3. **Give the text and the question to the language model** – the model sees both together.\n4. **Write the answer** – the model combines the passage with its own knowledge to produce a response.\n\nWe say “search the notes” instead of “query an index” and “use the supplied text” instead of talking about complex tools. The model does not learn again from the passage; it only uses it for this answer [S1][S3].\n\n## A worked example\nImagine a notice posted on the wall of **Lotus College** library:\n\n> \"Lotus College library opens at 9 am and closes at 5 pm on weekdays.\"\n\nA student, Ravi, asks: **\"When does the library close on weekdays?**\"\n\n1. **Prepare notes** – the notice itself is the note.\n2. **Find useful text** – the sentence *\"closes at 5 pm on weekdays\"* directly answers the question.\n3. **Give to model** – we show the model the passage and Ravi’s question.\n4. **Write answer** – the model replies: *\"The library closes at 5 pm on weekdays.\"* This answer is supported by the note.\n\nNow Ravi asks another question: **\"What is the library's phone number?**\"\nThe notice has no phone number. After step 2 we find no relevant passage. We must tell Ravi that the note does not contain the answer, rather than making one up. So we answer: *\"The notice does not provide a phone number for the library.*\"\n\n## Limits\nRAG is not magic. The retrieved passage may be outdated, wrong, or unrelated. The model can still add mistakes even when the passage is correct. If the notes lack the needed information, we must say so. RAG does not guarantee perfect answers, only that evidence can improve reliability [S2][S3].\n\n## Try it yourself\n1. **How does the four‑step RAG process help the model give a better answer?**\n   *Answer:* It gives the model fresh, reliable text that it can use, reducing reliance on old knowledge.\n2. **What should you do if your notes do not contain the answer to a question?**\n   *Answer:* State that the notes do not provide the answer, instead of inventing information.\n\n## Recap\nRAG stands for Retrieval‑Augmented Generation. We first write clear notes, then find a short passage that matches a question, give both to a language model, and finally write an answer. The method can make answers more factual, but it can still be wrong, and missing evidence must be reported honestly.\n\n## Sources\n- [S1] https://aws.amazon.com/what-is/retrieval-augmented-generation/\n- [S2] https://arxiv.org/abs/2005.11401\n- [S3] https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview",
+  "failed_checks": [
+    {
+      "id": "example",
+      "passed": false,
+      "reason": "The worked example is presented as a real scenario but is not identified as explicitly fictional; the criterion requires an explicitly fictional Indian example.",
+      "fix": "Label the example as fictional (e.g., \"Fictional example: ...\") and ensure it is clearly marked as invented for teaching purposes.",
+      "evidence": "## A worked example"
+    }
+  ],
+  "mechanical_requirements": "450–1000 prose words; mean sentence/line <=18 words; longest <=32; at least two supplied source IDs cited in body and all cited URLs listed."
+}

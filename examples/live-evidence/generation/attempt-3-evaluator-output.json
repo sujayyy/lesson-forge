@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "id": "accuracy",
+      "passed": true,
+      "reason": "All technical claims match the supplied source facts; no invented capabilities or guarantees are made.",
+      "fix": "",
+      "evidence": "When the AI only relies on its earlier learning, it may miss recent facts or private details. By adding a fresh passage, we give the model something it definitely knows. Experiments show that this often makes answers more factual, though it does not guarantee every answer is correct [S2]."
+    },
+    {
+      "id": "foundations",
+      "passed": true,
+      "reason": "The lesson explains Retrieval‑Augmented Generation, AI as software that performs tasks needing human intelligence, and language models from zero knowledge without assuming programming background.",
+      "fix": "",
+      "evidence": "AI means software that can do tasks that usually need human thinking, like answering questions. A language model is a type of AI that has read lots of written material and learned how words fit together. Its learning is called *training* – it looks at many examples and remembers patterns. The model’s original training does not contain our personal notes, so we bring those notes in at the time of answering [S1]."
+    },
+    {
+      "id": "coverage",
+      "passed": true,
+      "reason": "The lesson covers what RAG is, why it matters, and the four‑step mechanism in correct order, and correctly notes that vector search or internet access are not required.",
+      "fix": "",
+      "evidence": "RAG follows four easy steps:"
+    },
+    {
+      "id": "example",
+      "passed": true,
+      "reason": "A complete fictional Indian college example is provided with source note, learner question, retrieved passage, supported answer, and an unanswered question with appropriate response.",
+      "fix": "",
+      "evidence": "**Fictional example:** A notice posted on the wall of **Lotus College** library reads:"
+    },
+    {
+      "id": "language",
+      "passed": true,
+      "reason": "Every technical term (RAG, AI, language model, retrieval, generate) is explained in everyday language at its first substantive use; the prose uses simple English suitable for a class‑12 graduate.",
+      "fix": "",
+      "evidence": "Retrieval‑Augmented Generation, called RAG, is a way to get better answers from an AI. First we have a question. Then we look in our own notes for a short piece of text that may help. We give that text and the question to a language model – a computer program that can write sentences after learning from many examples. The model uses the text to write an answer. This whole process is called RAG because we **retrieve** (find) useful text and then **generate** (write) an answer [S1]."
+    },
+    {
+      "id": "flow",
+      "passed": true,
+      "reason": "The lesson teaches prerequisites first, then the mechanism, followed by a worked example, limits, and practice questions, with a coherent recap and no contradictions.",
+      "fix": "",
+      "evidence": "AI means software that can do tasks that usually need human thinking, like answering questions. A language model is a type of AI that has read lots of written material and learned how words fit together. Its learning is called *training* – it looks at many examples and remembers patterns. The model’s original training does not contain our personal notes, so we bring those notes in at the time of answering [S1]."
+    },
+    {
+      "id": "practice",
+      "passed": true,
+      "reason": "Two answerable learner questions are included with correct answers and short explanations, testing understanding of the mechanism and handling missing evidence.",
+      "fix": "",
+      "evidence": "1. **How does the four‑step RAG process help the model give a better answer?**"
+    }
+  ]
+}
